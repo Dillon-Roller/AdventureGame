@@ -12,5 +12,6 @@ typedef struct enemy {
 } Enemy;
 
 Enemy InitEnemy(int health, int attack, int defense, char* desc, Item* item);
+void PrintEnemy(Enemy enemy);
 
 #endif
