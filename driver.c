@@ -29,5 +29,14 @@ int main(void) {
 	r3.left = NULL;
 	
 	PrintMap(&start);
+	
+	Room* ptr = InitRoom(1);
+	
+	PrintRoom(ptr);
+	
+	Room* map = CreateMap(0, NULL);
+	
+	PrintMap(map);
+	
 	return 0;
 }
