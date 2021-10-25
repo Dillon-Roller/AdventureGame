@@ -4,6 +4,7 @@
 typedef struct enemy {
   int health;
   int attack;
+  int defense;
   char desc[250];
 } Enemy;
 
