@@ -7,4 +7,7 @@ typedef struct item {
   int defense;
 } Item;
 
+Item* InitItem(int health, int attack, int defense);
+void PrintItem(const Item* item);
+
 #endif
