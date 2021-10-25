@@ -1,3 +1,6 @@
+#ifndef ROOM_H_
+#define ROOM_H_
+
 #define MAX_LEVEL 3
 #define MIN_BOSS_LEVEL 2
 
@@ -19,3 +22,5 @@ Room* InitRoom(int level);
 Room* CreateMap(int level, Room *r); // Recursively create rooms
 void PrintRoom(Room *r);
 void PrintMap(Room *r);
+
+#endif
