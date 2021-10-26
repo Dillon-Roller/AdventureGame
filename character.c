@@ -7,43 +7,36 @@
 #include "character.h"
 
 // Creates player and sets class.
-Character InitCharacter(Class class, int health, int attack, int defense) {
-// Assign stats based on the given class.
-    Character* tempPlayer = malloc(sizeof(Character));
-    switch(class) {
-        case WARRIOR:
-            tempPlayer->health = 100;
-            tempPlayer->attack = 20;
-            tempPlayer->defense = 15;
-            tempPlayer->class = WARRIOR;
-            break;
-        case ARCHER:
-            tempPlayer->health = 100;
-            tempPlayer->attack = 18;
-            tempPlayer->defense = 7;
-            tempPlayer->class = ARCHER;
-            break;
-        case WIZARD:
-            tempPlayer->health = 100;
-            tempPlayer->attack = 19;
-            tempPlayer->defense = 10;
-            tempPlayer->class = WIZARD;
-            break;
-        case CLERIC:
-            tempPlayer->health = 100;
-            tempPlayer->attack = 15;
-            tempPlayer->defense = 12;
-            tempPlayer->class = CLERIC;
-            break;
-        default:
-            tempPlayer->health = 100;
-            tempPlayer->attack = 10;
-            tempPlayer->defense = 10;
-            break;
-    }
+Character InitCharacter(int health, int attack, int defense, int numPotions, Item* item) {
+    Character* character = malloc(sizeof(Character));
+    character->health = health;
+    character->attack = attack;
+    character->defense = defense;
+    character->numPotions = numPotions;
+    character->itemPtr = item;
 
-    return(tempPlayer); // Return memory address of player.
+    return *character;
 
+}
+
+Character InitWarrior(){
+    Character player = InitCharacter(100, 20, 15, 1);
+    return player;
+}
+
+Character InitArcher(){
+    Character player = InitCharacter(100, 18, 7, 1);
+    return player;
+}
+
+Character InitWizard(){
+    Character player = InitCharacter(100, 19, 10, 1);
+    return player;
+}
+
+Character InitCleric(){
+    Character player = InitCharacter(100, 15, 12, 1);
+    return player;
 }
 
 void PrintCharacter(Character* character){
@@ -51,9 +44,11 @@ void PrintCharacter(Character* character){
     printf("Health: %d\n", character->health);
     printf("Attack: %d\n", character->attack);
     printf("Defense: %d\n", character->defense);
+    printf("Number of Potions: %d\n", character->numPotions);
+    printf("Item: %s\n", character->itemPtr);
 
 }
-void Attack(int attack, Character* character) {
+void AttackCharacter(int attack, Character* character) {
     character->health -= (attack - character->defense);
 
 }
@@ -62,8 +57,4 @@ void PrintItems(Item *itemPtr){
     printf(itemPtr);
 }
 
-/*
-Item* DropItem(const Character* character) {
-    return character->item;
-}
- */
+
