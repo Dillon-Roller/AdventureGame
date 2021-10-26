@@ -28,6 +28,6 @@ Item* DropItem(const Enemy* enemy) {
   return enemy->item;
 }
 
-bool isDead(const Enemy* enemy) {
+bool IsEnemyDead(const Enemy* enemy) {
   return enemy->health <= 0;
 }
