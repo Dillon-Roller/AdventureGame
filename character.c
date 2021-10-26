@@ -6,6 +6,7 @@
 #include <string.h>
 #include <printf.h>
 #include "character.h"
+#include "item.h"
 
 // Creates player and sets class.
 Character InitCharacter(int health, int attack, int defense, int numPotions, Item* item) {
@@ -46,7 +47,7 @@ void PrintCharacter(Character* character){
     printf("Attack: %d\n", character->attack);
     printf("Defense: %d\n", character->defense);
     printf("Number of Potions: %d\n", character->numPotions);
-    printf("Item: %s\n", character->itemPtr);
+    PrintItemList(character->itemPtr);
 
 }
 void AttackCharacter(int attack, Character* character) {
