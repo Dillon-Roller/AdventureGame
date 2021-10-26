@@ -18,5 +18,8 @@ void AttackEnemy(int damage, Enemy* enemy);
 Item* DropItem(const Enemy* emeny);
 bool IsEnemyDead(const Enemy* enemy);
 Enemy* InitGargoyle(const int level);
+Enemy* InitElemental(const int level);
+Enemy* InitWisp(const int level);
+Enemy* InitBoss(const int level);
 
 #endif

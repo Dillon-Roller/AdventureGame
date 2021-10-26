@@ -16,6 +16,6 @@ typedef struct item {
 
 Item* InitItem(const ItemType type);
 void PrintItem(const Item* item);
-const char* GetTypeName(const ItemType type);
+const char* GetItemTypeName(const ItemType type);
 
 #endif

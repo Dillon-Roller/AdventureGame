@@ -37,3 +37,21 @@ Enemy* InitGargoyle(const int level) {
   
   return InitEnemy(3 * level, 1 * level, 1 * level, "Gargoyle", item);
 }
+
+Enemy* InitElemental(const int level) {
+  Item* item = InitItem(rand() % last_item);
+
+  return InitEnemy(2 * level, 2 * level, 2 * level, "Elemental", item);
+}
+
+Enemy* InitWisp(const int level) {
+  Item* item = InitItem(rand() % last_item);
+
+  return InitEnemy(1 * level, 1 * level, 1 * level, "Wisp", item);
+}
+
+Enemy* InitBoss(const int level) {
+  Item* item = InitItem(rand() % last_item);
+
+  return InitEnemy(10 * level, 5 * level, 5 * level, "Boss", item);
+}
