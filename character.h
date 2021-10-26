@@ -28,9 +28,9 @@ Character InitWarrior();
 Character InitArcher();
 Character InitWizard();
 Character InitCleric();
-void PrintItems(Item *itemPtr);
 void PrintCharacter(Character* character);
 void AttackCharacter(int attack, Character* character);
+void AddItemToCharacter(Item *itemPtr, Character *character);
 
 
 #endif //ADVENTUREGAME_CHARACTER_H

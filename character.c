@@ -3,6 +3,7 @@
 //
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <printf.h>
 #include "character.h"
 
@@ -53,8 +54,24 @@ void AttackCharacter(int attack, Character* character) {
 
 }
 
-void PrintItems(Item *itemPtr){
-    printf(itemPtr);
+void AddItemToCharacter(Item *itemPtr, Character *character){
+    Item *charItem = character->itemPtr;
+
+    if (charItem == NULL) {
+        charItem = itemPtr;
+        return;
+    }
+
+    while (charItem->next != NULL) {
+        if (strcmp(charItem->name, itemPtr->name) == 0) {
+            ItemLevelUp(charItem);
+            return;
+        }
+
+        charItem = charItem->next;
+    }
+
+    charItem->next = itemPtr;
 }
 
 
