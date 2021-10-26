@@ -31,3 +31,9 @@ Item* DropItem(const Enemy* enemy) {
 bool IsEnemyDead(const Enemy* enemy) {
   return enemy->health <= 0;
 }
+
+Enemy* InitGargoyle(const int level) {
+  Item* item = InitItem(rand() % last_item); //generate random item
+  
+  return InitEnemy(3 * level, 1 * level, 1 * level, "Gargoyle", item);
+}
