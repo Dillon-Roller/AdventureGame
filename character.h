@@ -26,6 +26,6 @@ Character InitCharacter(Class class, int health, int attack, int defense);
 void PrintItems(Item *itemPtr);
 void PrintCharacter(Character* character);
 void Attack(int attack, Character* character);
-Item* DropItem(const Character* character);
+//Item* DropItem(const Character* character);
 
 #endif //ADVENTUREGAME_CHARACTER_H
