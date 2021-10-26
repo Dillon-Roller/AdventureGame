@@ -23,7 +23,7 @@ int main() {
   //test DropItem
   printf("Enemy dropped item:\n");
   Item* droppedItem = DropItem(enemy);
-  PrintItem(item);
+  PrintItem(droppedItem);
   printf("\n");
 
   //test isDead
@@ -37,4 +37,10 @@ int main() {
   PrintEnemy(gargoyle);
   PrintItem(DropItem(gargoyle));
   printf("\n");
+
+  //level item up
+  printf("Leveling Gargoyle item up\n");
+  ItemLevelUp(gargoyle->item);
+  PrintItem(gargoyle->item);
+
 }
