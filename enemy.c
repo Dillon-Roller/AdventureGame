@@ -55,3 +55,4 @@ Enemy* InitBoss(const int level) {
 
   return InitEnemy(10 * level, 5 * level, 5 * level, "Boss", item);
 }
+
