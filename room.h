@@ -16,9 +16,9 @@ typedef struct room {
 	char desc[250];	// Description of room
 	RoomType type;
 	int level;	// Tree level for enemy stat bonus
-	//Enemy *enemy;	// Enemy guarding the room
+	Enemy *enemy;	// Enemy guarding the room
 	bool isEnemyDefeated;	// Stores whether enemy is defeated and progression is possible
-	//Item *itemPtr; // Single item to add to character upon user input to interact
+	Item *itemPtr; // Single item to add to character upon user input to interact
 	struct room *up;	// Forward room
 	struct room *down;	// Previous room
 	struct room *left;	// Left room
