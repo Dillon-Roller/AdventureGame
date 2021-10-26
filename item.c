@@ -36,9 +36,22 @@ Item* InitItem(const ItemType type) {
   return item;
 }
 
+const char* GetTypeName(const ItemType type) {
+  switch(type) {
+    case SWORD: return "Sword";
+    case SHIELD: return "Shield";
+    case BOW: return "Bow";
+    case MUSKET: return "Musket";
+    case ARMOR: return "Armor";
+  }
+}
+
 void PrintItem(const Item* item) {
   printf("Item stats:\n");
+  printf("Type: %s\n", GetTypeName(item->type));
   printf("Health: %d\n", item->health);
   printf("Attack: %d\n", item->attack);
   printf("Defense: %d\n", item->defense);
 }
+
+
