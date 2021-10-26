@@ -21,7 +21,7 @@ Room* InitRoom(int level) {
 		}
 		else
 		{
-			room->type = rand() % BOSS + 1;
+			room->type = rand() % (BOSS + 1);
 		}
 		switch(room->type) {
 			case DARK:
@@ -38,7 +38,9 @@ Room* InitRoom(int level) {
 				strcpy(room->desc, "Your feet slosh about as you enter. The air is stale and the ground is wet.");
 				break;
 			case BOSS:
-				strcpy(room->desc, "Run");
+				strcpy(room->desc,  "You enter a palatial hall with great, blood-red and golden tapestries draped over vast windows.\n"
+									"The intricate detail of the woodwork is mesmerizing to gaze upon,\n"
+									"but the hulking beast thrashing toward you is more intriguing.");
 				//CreateBoss
 				break;
 			default:
@@ -73,6 +75,12 @@ Room* CreateMap(int level, Room *r) { // Recursively create rooms
 	
 	return room;
 }
+
+Item* EnemyDefeated(Room *r) {
+	r->isEnemyDefeated = true;
+	
+	return DropItem(room->enemy);
+}	
 
 void PrintRoom(Room *r) {
 	printf("%s\n", r->desc);
