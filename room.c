@@ -78,8 +78,7 @@ Room* CreateMap(int level, Room *r) { // Recursively create rooms
 
 Item* EnemyDefeated(Room *r) {
 	r->isEnemyDefeated = true;
-	
-	return DropItem(room->enemy);
+	return DropItem(r->enemy);
 }	
 
 void PrintRoom(Room *r) {
