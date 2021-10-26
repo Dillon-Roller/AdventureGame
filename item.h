@@ -10,6 +10,7 @@ typedef struct item {
   int health;
   int attack;
   int defense;
+  int level;
   ItemType type;
   struct item* nextItem;
 } Item;
@@ -17,5 +18,8 @@ typedef struct item {
 Item* InitItem(const ItemType type);
 void PrintItem(const Item* item);
 const char* GetItemTypeName(const ItemType type);
+void ItemLevelUp(Item* item);
+void PrintItemName(const Item* item);
+void PrintItemList(Item* itemPtr);
 
 #endif

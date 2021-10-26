@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <ctype.h>
 
 #include "menu.h"
 #include "room.h"
@@ -6,8 +7,9 @@
 
 int main(void) {
 	Room* map = CreateMap(0, NULL);
-	Character character = InitCharacter(Class class, int health, int attack, int defense);
+	Character character = InitWarrior();
 	Room* currentRoom = map;
+	char option = 0;
 	
 	do
 	{
@@ -21,11 +23,11 @@ int main(void) {
 		}
 
 		// Remove whitespace from stdin
-		char c;
+		/*char c;
 		while (isspace(c = getchar())) {}
-		ungetc(c, stdin);
+		ungetc(c, stdin);*/
 
-		currentRoom = Menu(option, currentRoom, character);
+		currentRoom = Menu(option, currentRoom, &character);
 
 	} while (1);	
 }

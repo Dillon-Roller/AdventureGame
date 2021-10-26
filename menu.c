@@ -1,10 +1,11 @@
 #include <stdio.h>
+#include <ctype.h>
 
 #include "menu.h"
 
 Character CharacterCreator() {
 	printf("Select your character type:\n\n");
-	PrintCharacterTypes();
+	//PrintCharacterTypes();
 	char option = getchar();
 	while (!isalpha(option)) { option = getchar(); } // Ensure only alphabetic characters
 }
@@ -63,6 +64,9 @@ Room* Menu(char cmd, Room *room, Character *character) {
 		case 'a':	// Attack enemy
 			AttackCommand(room, character);
 			break;
+		case 'h':
+			PrintCommandList();
+			break;
 		default:
 			break;		
 	}
@@ -88,7 +92,7 @@ void AttackCommand(Room *room, Character *character) {
 			Item *item = EnemyDefeated(room);
 			AddItemToCharacter(item, character);
 			printf("You have defeated the %s!\n", room->enemy->name);
-			printf("A %s has been added to your inventory\n", item->name);
+			printf("A %s has been added to your inventory\n", GetItemTypeName(item->type));
 		}				
 	}
 }

@@ -26,22 +26,23 @@ Room* InitRoom(int level) {
 		switch(room->type) {
 			case DARK:
 				strcpy(room->desc, "You have entered an eerily dark room.");
-				//room.enemy = CreateGargoyle
+				room->enemy = InitGargoyle(level);
 				//room->itemPtr = NULL;
 				break;
 			case BRIGHT:
 				strcpy(room->desc, "This room is blinding with a faint chiming.");
-				//CreateWisp
+				room->enemy = InitWisp(level);
 				//room.itemPtr = CreateItem(...);
 				break;
 			case DAMP:
 				strcpy(room->desc, "Your feet slosh about as you enter. The air is stale and the ground is wet.");
+				room->enemy = InitElemental(level);
 				break;
 			case BOSS:
 				strcpy(room->desc,  "You enter a palatial hall with great, blood-red and golden tapestries draped over vast windows.\n"
 									"The intricate detail of the woodwork is mesmerizing to gaze upon,\n"
 									"but the hulking beast thrashing toward you is more intriguing.");
-				//CreateBoss
+				room->enemy = InitBoss(level);
 				break;
 			default:
 				break;
