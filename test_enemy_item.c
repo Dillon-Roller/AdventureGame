@@ -2,7 +2,7 @@
 #include "enemy.h"
 
 int main() {
-  Item* item = InitItem(5, 5, 0);
+  Item* item = InitItem(SWORD);
   Enemy* enemy = InitEnemy(10, 5, 2, "Wisp", item);
 
   //test InitEnemy
