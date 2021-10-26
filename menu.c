@@ -66,7 +66,7 @@ Room* Menu(char cmd, Room *room, Character *character) {
 
 void AttackCommand(Room *room, Character *character) {
 	if (room->isEnemyDefeated) {
-		printf("You have already vanquished this enemy!"\n);
+		printf("You have already vanquished this enemy!\n");
 	}
 	else {
 		AttackEnemy(character->attack, room->enemy);
