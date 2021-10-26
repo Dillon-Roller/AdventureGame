@@ -1,7 +1,11 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 #include "enemy.h"
 
 int main() {
+  srand(time(NULL));
+
   Item* item = InitItem(SHIELD);
   Enemy* enemy = InitEnemy(10, 5, 2, "Wisp", item);
 
@@ -25,5 +29,12 @@ int main() {
   //test isDead
   printf("Enemy after being attacked for 10 more damage with defense 2\n");
   AttackEnemy(10, enemy);
-  printf("Enemy is %s\n", IsEnemyDead(enemy) ? "dead" : "alive");
+  printf("Enemy is %s\n\n", IsEnemyDead(enemy) ? "dead" : "alive");
+
+  //test initGargoyle
+  printf("Spawning Level 1 Gargoyle:\n");
+  Enemy* gargoyle = InitGargoyle(1);
+  PrintEnemy(gargoyle);
+  PrintItem(DropItem(gargoyle));
+  printf("\n");
 }

@@ -17,5 +17,6 @@ void PrintEnemy(const Enemy* enemy);
 void AttackEnemy(int damage, Enemy* enemy);
 Item* DropItem(const Enemy* emeny);
 bool IsEnemyDead(const Enemy* enemy);
+Enemy* InitGargoyle(const int level);
 
 #endif

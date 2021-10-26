@@ -5,6 +5,7 @@
 Item* InitItem(const ItemType type) {
   Item* item = (Item*)malloc(sizeof(Item));
   item->type = type;
+  item->nextItem = NULL;
 
   switch(item->type) {
     case SWORD:
