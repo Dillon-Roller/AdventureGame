@@ -28,11 +28,13 @@ Character
 	void AddItemToCharacter(Item *itemPtr, Character *character) { 
 		Item *charItem = character->itemPtr;
 		
+		// Empty inventory
 		if (charItem == NULL) {
 			charItem = itemPtr;
 			return;
 		}
 		
+		// Search for same item type in inventory
 		while (charItem->next != NULL) { 
 			if (strcmp(charItem->name, itemPtr->name) == 0) {
 				ItemLevelUp(charItem);

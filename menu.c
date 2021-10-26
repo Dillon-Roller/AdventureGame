@@ -2,8 +2,14 @@
 
 #include "menu.h"
 
-Room* Menu(char cmd, Room *room, Character *character) {
-	
+Character CharacterCreator() {
+	printf("Select your character type:\n\n");
+	PrintCharacterTypes();
+	char option = getchar();
+	while (!isalpha(option)) { option = getchar(); } // Ensure only alphabetic characters
+}
+
+Room* Menu(char cmd, Room *room, Character *character) {	
 	switch(cmd) {
 		case '1':	// Move to the forward room
 			if (room->isEnemyDefeated && room->up != NULL)
@@ -33,7 +39,7 @@ Room* Menu(char cmd, Room *room, Character *character) {
 			break;
 		case 'f':	// Interact with a room's item
 			if (room->itemPtr != NULL) {
-				GetLastItem(character->itemPtr)->next = room->itemPtr;
+				AddItemToCharacter(room->itemPtr, character);
 				printf("You have acquired a %s!\n", GetItemTypeName(room->itemPtr->type));
 			}
 			else {
@@ -85,4 +91,24 @@ void AttackCommand(Room *room, Character *character) {
 			printf("A %s has been added to your inventory\n", item->name);
 		}				
 	}
+}
+
+void PrintCommandList() {
+	printf(
+		"Command List:\n\n"
+		"'1':	Move to the forward room\n"
+		"'2':	Move to the left room\n"
+		"'3':	Move to the right room\n"
+		"'4':	Move back to the previous room\n"
+		"'f':	Interact with a room's item\n"
+		"'r':	Show room description\n"
+		"'e':	Show enemy description\n"
+		"'i':	List inventory\n"
+		"'c':	Show character information\n"
+		"'u':	Use health potion\n"
+		"'a':	Attack enemy\n"
+		"'h':	Show command list\n"
+		"'q': 	Quit game\n"
+		"\n"
+	);
 }
