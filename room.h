@@ -6,8 +6,8 @@
 #ifndef ROOM_H_
 #define ROOM_H_
 
-#define MAX_LEVEL 3 // Number of tree levels
-#define MIN_BOSS_LEVEL 2	// Minimum level at which bosses can be placed
+#define MAX_LEVEL 4 // Number of tree levels
+#define MIN_BOSS_LEVEL 3	// Minimum level at which bosses can be placed
 
 // The type of room determines the atmosphere and possible enemies
 typedef enum type {DARK, BRIGHT, DAMP, BOSS} RoomType;
@@ -25,10 +25,11 @@ typedef struct room {
 	struct room *right;	// Right room
 } Room;
 
-Room* InitRoom(int level);	// Create and initialize a room
-Room* CreateMap(int level, Room *r); // Recursively create linked rooms
+Room* InitRoom(const int level);	// Create and initialize a room
+Room* CreateMap(const int level, Room *r); // Recursively create linked rooms
+Room* MoveToRoom(Room *r, const char option);	// Move to an adjacent room
 Item* EnemyDefeated(Room *r);	// Set room bool to true to allow use of room pointers
-void PrintRoom(Room *r);	// Output a room
-void PrintMap(Room *r);	// Output all rooms
+void PrintRoom(const Room *r);	// Output a room
+void PrintMap(const Room *r);	// Output all rooms
 
 #endif

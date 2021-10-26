@@ -13,30 +13,10 @@ Character CharacterCreator() {
 Room* Menu(char cmd, Room *room, Character *character) {	
 	switch(cmd) {
 		case '1':	// Move to the forward room
-			if (room->isEnemyDefeated && room->up != NULL)
-			{
-				room = room->up;
-				PrintRoom(room);
-			}
-			break;
 		case '2':	// Move to the left room
-			if (room->isEnemyDefeated && room->left != NULL)
-			{
-				room = room->left;
-				PrintRoom(room);
-			}
-			break;
 		case '3':	// Move to the right room
-			if (room->isEnemyDefeated && room->right != NULL)
-			{
-				room = room->right;
-				PrintRoom(room);
-			}
-			break;
 		case '4':	// Move back to the previous room
-			room = room->down;
-			printf("You return to the previous room:\n");
-			PrintRoom(room);
+			room = MoveToRoom(room, cmd);
 			break;
 		case 'f':	// Interact with a room's item
 			if (room->itemPtr != NULL) {
@@ -71,7 +51,7 @@ Room* Menu(char cmd, Room *room, Character *character) {
 			break;		
 	}
 
-	return 0;
+	return room;
 }
 
 void AttackCommand(Room *room, Character *character) {

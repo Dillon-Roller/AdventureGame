@@ -6,16 +6,26 @@
 #include "character.h"
 
 int main(void) {
-	Room* map = CreateMap(0, NULL);
+	Room* map = CreateMap(1, NULL);
 	Character character = InitWarrior();
 	Room* currentRoom = map;
+
+	printf(
+		"You find yourself unfamiliar.\n"
+		"The air is as tufts of cotton, just dotted with light from the sky above.\n"
+		"The land is swampy and desolate save for but a single edifice that draws you.\n"
+		"You feel the force of something pulling you in, but cannot escape its clutches.\n"
+	);
+
+	PrintRoom(currentRoom);
+
 	char option = 0;
 	
 	do
 	{
-		printf("Command your hero ('h' for command list):\n");
+		printf("\nCommand your hero ('h' for command list):\n");
 		option = getchar();
-		while (!isalpha(option)) { option = getchar(); } // Ensure only alphabetic characters
+		while (!isalnum(option)) { option = getchar(); } // Ensure only alphabetic characters
 
 		if (option == 'q')
 		{
@@ -26,6 +36,8 @@ int main(void) {
 		/*char c;
 		while (isspace(c = getchar())) {}
 		ungetc(c, stdin);*/
+
+		printf("\n");
 
 		currentRoom = Menu(option, currentRoom, &character);
 

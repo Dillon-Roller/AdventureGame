@@ -55,12 +55,13 @@ void AttackCharacter(int attack, Character* character) {
 
 void AddItemToCharacter(Item *itemPtr, Character *character){
     Item *charItem = character->itemPtr;
-	const char *charItemType = GetItemTypeName(charItem->type);
 
     if (charItem == NULL) {
         charItem = itemPtr;
         return;
     }
+
+    const char* charItemType = GetItemTypeName(charItem->type);
 
     while (charItem->nextItem != NULL) {
         if (strcmp(charItemType, GetItemTypeName(itemPtr->type)) == 0) {

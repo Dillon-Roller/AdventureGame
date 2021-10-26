@@ -15,6 +15,7 @@ Enemy* InitEnemy(int health, int attack, int defense, char* name, char* desc, It
 }
 
 void PrintEnemy(const Enemy* enemy) {
+  printf("Type: %s\n", enemy->name);
   printf("Enemy description: %s\n", enemy->desc);
   printf("Health: %d\n", enemy->health);
   printf("Attack: %d\n", enemy->attack);
