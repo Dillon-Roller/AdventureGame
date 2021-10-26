@@ -1,4 +1,5 @@
 #include "item.h"
+#include <stdbool.h>
 
 #ifndef ENEMY_H_
 #define ENEMY_H_
@@ -15,5 +16,6 @@ Enemy* InitEnemy(int health, int attack, int defense, char* desc, Item* item);
 void PrintEnemy(const Enemy* enemy);
 void AttackEnemy(int damage, Enemy* enemy);
 Item* DropItem(const Enemy* emeny);
+bool isDead(const Enemy* enemy);
 
 #endif

@@ -27,3 +27,7 @@ void AttackEnemy(int damage, Enemy* enemy) {
 Item* DropItem(const Enemy* enemy) {
   return enemy->item;
 }
+
+bool isDead(const Enemy* enemy) {
+  return enemy->health <= 0;
+}
