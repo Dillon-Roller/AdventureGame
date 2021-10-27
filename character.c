@@ -48,6 +48,44 @@ void PrintCharacter(Character* character){
     printf("Item: %s\n", character->itemPtr);
 
 }
+
+void PrintCharacterType(){
+    //Warrior
+    char warrior[] = "Warrior";
+    char warriorHealth[] = "Health: 100";
+    char warriorAttack[] = "Attack: 20";
+    char warriorDefense[] = "Defense: 15";
+    char warriorPotions[] = "Potions: 1";
+
+    //Archer
+    char archer[] = "Archer";
+    char archerHealth[] = "Health: 100";
+    char archerAttack[] = "Attack: 18";
+    char archerDefense[] = "Defense: 7";
+    char archerPotions[] = "Potions: 1";
+
+    //Wizard
+    char wizard[] = "Wizard";
+    char wizardHealth[] = "Health: 100";
+    char wizardAttack[] = "Attack: 19";
+    char wizardDefense[] = "Defense: 10";
+    char wizardPotions[] = "Potions: 1";
+
+    //Cleric
+    char cleric[] = "Cleric";
+    char clericHealth[] = "Health: 100";
+    char clericAttack[] = "Attack: 15";
+    char clericDefense[] = "Defense: 12";
+    char clericPotions[] = "Potions: 1";
+
+    printf("%-20s %-20s %-20s %-20s\n", warrior, archer, wizard, cleric);
+    printf("%-20s %-20s %-20s %-20s\n", warriorHealth, archerHealth, wizardHealth, clericHealth);
+    printf("%-20s %-20s %-20s %-20s\n", warriorAttack, archerAttack, wizardAttack, clericAttack);
+    printf("%-20s %-20s %-20s %-20s\n", warriorDefense, archerDefense, wizardDefense, clericDefense);
+    printf("%-20s %-20s %-20s %-20s\n", warriorPotions, archerPotions, wizardPotions, clericPotions);
+
+}
+
 void AttackCharacter(int attack, Character* character) {
     character->currHealth -= (attack - character->defense);
 
