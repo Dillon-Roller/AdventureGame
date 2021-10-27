@@ -172,3 +172,25 @@ void PrintMap(const Room *r) {
 		PrintMap(r->right);
 	}
 }
+
+void SaveRoom(FILE* fp, const Room *r, const Room *cur) {
+  int item;
+  if(r->itemPtr == NULL) {
+    item = -1;
+  }
+  else {
+    item = r->itemPtr->type;
+  }
+  fprintf(fp, "%d %d %d %d %d\n", r->type, r->level, r->isEnemyDefeated, 
+    item, r == cur ? 1 : 0);
+}
+
+void SaveMap(FILE* fp, const Room *r, const Room *cur) {
+  if (r != NULL) {
+    SaveRoom(fp, r, cur);
+    SaveMap(fp, r->up, cur);
+    SaveMap(fp, r->left, cur);
+    SaveMap(fp, r->right, cur);
+  }
+}
+

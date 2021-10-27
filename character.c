@@ -6,7 +6,7 @@
 #include <string.h>
 #include "character.h"
 
-// Creates player and sets class.
+// Creates player
 Character InitCharacter(int health, int attack, int defense) {
     Character* character = malloc(sizeof(Character));
     if (character != NULL) {
@@ -87,6 +87,15 @@ void PrintCharacterTypes(){
 
 }
 
+const char* GetCharacterType(const Class class) {
+    switch(class) {
+        case WARRIOR: return "Warrior";
+        case ARCHER: return "Archer";
+        case WIZARD: return "Wizard";
+        case CLERIC: return "Cleric";
+    }
+}
+
 int AttackCharacter(int damage, Character* character) {
     int resultDmg = 0;
 
@@ -94,7 +103,6 @@ int AttackCharacter(int damage, Character* character) {
         resultDmg = (damage - character->defense);
         character->currHealth -= resultDmg;
     }
-
     return resultDmg;
 }
 
