@@ -34,6 +34,7 @@ Character InitArcher();
 Character InitWizard();
 Character InitCleric();
 void PrintCharacter(Character* character);
+void PrintCharacterType();
 void AttackCharacter(int attack, Character* character);
 void AddItemToCharacter(Item *itemPtr, Character *character);
 
