@@ -6,7 +6,7 @@
 #include <string.h>
 #include "character.h"
 
-// Creates player and sets class.
+// Creates player
 Character InitCharacter(int health, int attack, int defense) {
     Character* character = malloc(sizeof(Character));
     character->currHealth = character->maxHealth = health;	
@@ -84,6 +84,15 @@ void PrintCharacterType(){
     printf("%-20s %-20s %-20s %-20s\n", warriorDefense, archerDefense, wizardDefense, clericDefense);
     printf("%-20s %-20s %-20s %-20s\n", warriorPotions, archerPotions, wizardPotions, clericPotions);
 
+}
+
+const char* GetCharacterType(const Class class) {
+    switch(class) {
+        case WARRIOR: return "Warrior";
+        case ARCHER: return "Archer";
+        case WIZARD: return "Wizard";
+        case CLERIC: return "Cleric";
+    }
 }
 
 void AttackCharacter(int attack, Character* character) {

@@ -11,13 +11,13 @@
 #define HEALTH_POTION_VALUE 30
 
 //character classes enum
-/*typedef enum ClassEnum {
+typedef enum ClassEnum {
     WIZARD,
     WARRIOR,
     CLERIC,
     ARCHER
 } Class;
- */
+
 
 //Character stuct
 typedef struct character_struct {
@@ -37,6 +37,7 @@ Character InitWizard();
 Character InitCleric();
 void PrintCharacter(Character* character);
 void PrintCharacterType();
+const char* GetCharacterType(const Class class);
 void AttackCharacter(int attack, Character* character);
 void AddItemToCharacter(Item *itemPtr, Character *character);
 
