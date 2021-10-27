@@ -32,6 +32,14 @@ int main(void) {
 			return 0;
 		}
 
+    if(option == 's') {
+      printf("Saving map..");
+      FILE* fp = fopen("gameMap.txt", "w");
+      SaveMap(fp, map, currentRoom);
+      fclose(fp);
+      printf("Map saved");
+    }
+
 		// Remove whitespace from stdin
 		/*char c;
 		while (isspace(c = getchar())) {}
