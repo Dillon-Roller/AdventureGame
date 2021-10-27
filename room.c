@@ -79,7 +79,7 @@ Room* CreateMap(int level, Room *r) { // Recursively create rooms
 
 Room* MoveToRoom(Room *r, char option) {
 	switch(option) {
-	case '1':	// Move to the forward room
+		case '1':	// Move to the forward room
 			if (r->isEnemyDefeated && r->up != NULL) {
 				r = r->up;
 				PrintRoom(r);

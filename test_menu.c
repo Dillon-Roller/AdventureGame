@@ -7,7 +7,7 @@
 
 int main(void) {
 	Room* map = CreateMap(1, NULL);
-	Character character = InitWarrior();
+	Character character = CharacterCreator();
 	Room* currentRoom = map;
 
 	printf(

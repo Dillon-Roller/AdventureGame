@@ -4,10 +4,27 @@
 #include "menu.h"
 
 Character CharacterCreator() {
-	printf("Select your character type:\n\n");
-	//PrintCharacterTypes();
-	char option = getchar();
-	while (!isalpha(option)) { option = getchar(); } // Ensure only alphabetic characters
+	do {
+		printf("Select your character type:\n\n");
+		//PrintCharacterTypes();
+
+		char option = getchar();
+		while (!isalpha(option)) { option = getchar(); } // Ensure only alphabetic characters
+
+		switch (option) {
+		case 'w':
+			return InitWarrior();
+		case 'a':
+			return InitArcher();
+		case 'z':
+			return InitWizard();
+		case 'c':
+			return InitCleric();
+		default:
+			printf("Please select a valid character class.\n");
+			break;
+		}
+	} while (1);
 }
 
 Room* Menu(char cmd, Room *room, Character *character) {	
@@ -34,12 +51,18 @@ Room* Menu(char cmd, Room *room, Character *character) {
 			PrintEnemy(room->enemy);
 			break;
 		case 'i':	// List inventory
-			PrintItemList(character->itemPtr);
+			if (character->itemPtr != NULL) {
+				PrintItemList(character->itemPtr);
+			}
+			else {
+				printf("Your inventory is empty.\n");
+			}
 			break;
 		case 'c':	// Show character information
 			PrintCharacter(character);
 			break;
 		case 'u':	// Use health potion
+			UsePotionCommand(character);
 			break;
 		case 'a':	// Attack enemy
 			AttackCommand(room, character);
@@ -65,7 +88,7 @@ void AttackCommand(Room *room, Character *character) {
 		if (!IsEnemyDead(room->enemy)) {
 			AttackCharacter(room->enemy->attack, character);
 			printf("The %s dealt %d damage to you!\n", room->enemy->name, room->enemy->attack);
-			printf("You have %d health remaining.\n", character->health);
+			printf("You have %d health remaining.\n", character->currHealth);
 		}
 		else
 		{
@@ -74,6 +97,31 @@ void AttackCommand(Room *room, Character *character) {
 			printf("You have defeated the %s!\n", room->enemy->name);
 			printf("A %s has been added to your inventory\n", GetItemTypeName(item->type));
 		}				
+	}
+}
+
+void UsePotionCommand(Character* character) {
+	if (character->numPotions > 0)
+	{
+		if (character->currHealth == character->maxHealth) {
+			printf("Your health is already full.\n");
+			return;
+		}
+
+		if (character->currHealth + HEALTH_POTION_VALUE > character->maxHealth)
+		{
+			character->currHealth = character->maxHealth;
+		}
+		else {
+			character->currHealth += HEALTH_POTION_VALUE;
+			character->numPotions -= 1;
+			printf("You drank a health potion.\n");
+			printf("Your health is now %d.\n", character->currHealth);
+			printf("You have %d %s remaining\n", character->numPotions, character->numPotions == 1 ? "potion" : "potions");
+		}
+	}
+	else {
+		printf("You have no more health potions!\n");
 	}
 }
 

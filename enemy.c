@@ -5,12 +5,15 @@
 
 Enemy* InitEnemy(int health, int attack, int defense, char* name, char* desc, Item* item) {
   Enemy* enemy = (Enemy*)malloc(sizeof(Enemy));
-  enemy->health = health;
-  enemy->attack = attack;
-  enemy->defense = defense;
-  enemy->item = item;
-  strcpy(enemy->name, name);
-  strcpy(enemy->desc, desc);
+  if (enemy != NULL)
+  {
+	  enemy->health = health;
+	  enemy->attack = attack;
+	  enemy->defense = defense;
+	  enemy->item = item;
+	  strcpy(enemy->name, name);
+	  strcpy(enemy->desc, desc);
+  }
   return enemy;
 }
 

@@ -9,7 +9,7 @@
 // Creates player and sets class.
 Character InitCharacter(int health, int attack, int defense) {
     Character* character = malloc(sizeof(Character));
-    character->health = health;
+    character->currHealth = character->maxHealth = health;	
     character->attack = attack;
     character->defense = defense;
     character->numPotions = NUM_STARTING_POTIONS;
@@ -41,7 +41,7 @@ Character InitCleric(){
 
 void PrintCharacter(Character* character){
     //printf("Character class: %s\n", character->class);
-    printf("Health: %d\n", character->health);
+    printf("Health: %d/%d\n", character->currHealth, character->maxHealth);
     printf("Attack: %d\n", character->attack);
     printf("Defense: %d\n", character->defense);
     printf("Number of Potions: %d\n", character->numPotions);
@@ -49,7 +49,7 @@ void PrintCharacter(Character* character){
 
 }
 void AttackCharacter(int attack, Character* character) {
-    character->health -= (attack - character->defense);
+    character->currHealth -= (attack - character->defense);
 
 }
 

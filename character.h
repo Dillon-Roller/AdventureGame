@@ -8,6 +8,7 @@
 #define ADVENTUREGAME_CHARACTER_H
 
 #define NUM_STARTING_POTIONS 3
+#define HEALTH_POTION_VALUE 30
 
 //character classes enum
 /*typedef enum ClassEnum {
@@ -20,7 +21,8 @@
 
 //Character stuct
 typedef struct character_struct {
-    int health;
+    int currHealth;
+	int maxHealth;
     int attack;
     int defense;
     int numPotions;
