@@ -3,10 +3,20 @@
 
 #include "menu.h"
 
+// Clear screen macros
+#ifndef _MSC_BUILD	// If not using Visual Studio
+	#include <unistd.h>
+#endif
+#ifdef _WIN32	// Windows OS
+	#define CLEAR() system("cls")
+#else	// Other OS
+	#define CLEAR() system("clear")
+#endif
+
 Character CharacterCreator() {
 	do {
 		printf("Select your character type:\n\n");
-		//PrintCharacterTypes();
+		PrintCharacterTypes();
 
 		char option = getchar();
 		while (!isalpha(option)) { option = getchar(); } // Ensure only alphabetic characters
@@ -82,13 +92,20 @@ void AttackCommand(Room *room, Character *character) {
 		printf("You have already vanquished this enemy!\n");
 	}
 	else {
-		AttackEnemy(character->attack, room->enemy);
-		printf("You dealt %d damage to the %s.\n", character->attack, room->enemy->name);
+		int dmgToEnemy = AttackEnemy(character->attack, room->enemy);
+		printf("You dealt %d damage to the %s.\n", dmgToEnemy, room->enemy->name);
 		
 		if (!IsEnemyDead(room->enemy)) {
-			AttackCharacter(room->enemy->attack, character);
-			printf("The %s dealt %d damage to you!\n", room->enemy->name, room->enemy->attack);
-			printf("You have %d health remaining.\n", character->currHealth);
+			int dmgToChar = AttackCharacter(room->enemy->attack, character);
+			printf("The %s dealt %d damage to you!\n", room->enemy->name, dmgToChar);
+			if (isCharacterDead(character)) {
+				CLEAR();
+				printf("Your nightmare envelops you.\n");
+				exit(0);
+			}
+			else {
+				printf("You have %d health remaining.\n", character->currHealth);
+			}
 		}
 		else
 		{

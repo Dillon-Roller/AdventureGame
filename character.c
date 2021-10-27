@@ -9,12 +9,13 @@
 // Creates player and sets class.
 Character InitCharacter(int health, int attack, int defense) {
     Character* character = malloc(sizeof(Character));
-    character->currHealth = character->maxHealth = health;	
-    character->attack = attack;
-    character->defense = defense;
-    character->numPotions = NUM_STARTING_POTIONS;
-    character->itemPtr = NULL;
-
+    if (character != NULL) {
+        character->currHealth = character->maxHealth = health;
+        character->attack = attack;
+        character->defense = defense;
+        character->numPotions = NUM_STARTING_POTIONS;
+        character->itemPtr = NULL;
+    }
     return *character;
 
 }
@@ -49,30 +50,30 @@ void PrintCharacter(Character* character){
 
 }
 
-void PrintCharacterType(){
+void PrintCharacterTypes(){
     //Warrior
-    char warrior[] = "Warrior";
+    char warrior[] = "Warrior (w)";
     char warriorHealth[] = "Health: 100";
     char warriorAttack[] = "Attack: 20";
     char warriorDefense[] = "Defense: 15";
     char warriorPotions[] = "Potions: 1";
 
     //Archer
-    char archer[] = "Archer";
+    char archer[] = "Archer (a)";
     char archerHealth[] = "Health: 100";
     char archerAttack[] = "Attack: 18";
     char archerDefense[] = "Defense: 7";
     char archerPotions[] = "Potions: 1";
 
     //Wizard
-    char wizard[] = "Wizard";
+    char wizard[] = "Wizard (z)";
     char wizardHealth[] = "Health: 100";
     char wizardAttack[] = "Attack: 19";
     char wizardDefense[] = "Defense: 10";
     char wizardPotions[] = "Potions: 1";
 
     //Cleric
-    char cleric[] = "Cleric";
+    char cleric[] = "Cleric (c)";
     char clericHealth[] = "Health: 100";
     char clericAttack[] = "Attack: 15";
     char clericDefense[] = "Defense: 12";
@@ -86,9 +87,15 @@ void PrintCharacterType(){
 
 }
 
-void AttackCharacter(int attack, Character* character) {
-    character->currHealth -= (attack - character->defense);
+int AttackCharacter(int damage, Character* character) {
+    int resultDmg = 0;
 
+    if (damage > character->defense) {
+        resultDmg = (damage - character->defense);
+        character->currHealth -= resultDmg;
+    }
+
+    return resultDmg;
 }
 
 void AddItemToCharacter(Item *itemPtr, Character *character){
@@ -114,3 +121,10 @@ void AddItemToCharacter(Item *itemPtr, Character *character){
 }
 
 
+bool isCharacterDead(Character* character) {
+    if (character->currHealth <= 0){
+        return true;
+    }
+
+    return false;
+}
