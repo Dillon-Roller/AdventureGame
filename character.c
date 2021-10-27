@@ -7,47 +7,50 @@
 #include "character.h"
 
 // Creates player
-Character InitCharacter(int health, int attack, int defense) {
-    Character* character = malloc(sizeof(Character));
-    if (character != NULL) {
-        character->currHealth = character->maxHealth = health;
-        character->attack = attack;
-        character->defense = defense;
-        character->numPotions = NUM_STARTING_POTIONS;
-        character->itemPtr = NULL;
-    }
-    return *character;
+Character InitCharacter(int health, int attack, int defense, Class class) {
+    Character character;
+    character.class = class;
+    character.currHealth = character.maxHealth = health;
+    character.attack = attack;
+    character.defense = defense;
+    character.numPotions = NUM_STARTING_POTIONS;
+
+    // Item stats
+    character.itemHealth = 0;
+    character.itemAttack = 0;
+    character.itemDefense = 0;
+    character.itemPtr = NULL;
+    return character;
 
 }
 
 Character InitWarrior(){
-    Character player = InitCharacter(100, 20, 15);
+    Character player = InitCharacter(100, 20, 15, WARRIOR);
     return player;
 }
 
 Character InitArcher(){
-    Character player = InitCharacter(100, 18, 7);
+    Character player = InitCharacter(100, 18, 7, ARCHER);
     return player;
 }
 
 Character InitWizard(){
-    Character player = InitCharacter(100, 19, 10);
+    Character player = InitCharacter(100, 19, 10, WIZARD);
     return player;
 }
 
 Character InitCleric(){
-    Character player = InitCharacter(100, 15, 12);
+    Character player = InitCharacter(100, 15, 12, CLERIC);
     return player;
 }
 
 void PrintCharacter(Character* character){
-    //printf("Character class: %s\n", character->class);
-    printf("Health: %d/%d\n", character->currHealth, character->maxHealth);
-    printf("Attack: %d\n", character->attack);
-    printf("Defense: %d\n", character->defense);
+    printf("Class: %s\n", GetCharacterType(character->class));
+    printf("Health: %d(%d+%d) / %d(%d+%d)\n", GetCharacterHealth(character), character->currHealth, character->itemHealth, GetCharacterMaxHealth(character), character->maxHealth, character->itemHealth);
+    printf("Attack: %d(%d+%d)\n", GetCharacterAttack(character), character->attack, character->itemAttack);
+    printf("Defense: %d(%d+%d)\n", GetCharacterDefense(character), character->defense, character->itemDefense);
     printf("Number of Potions: %d\n", character->numPotions);
-    printf("Item: %s\n", character->itemPtr);
-
+    PrintItemList(character->itemPtr);
 }
 
 void PrintCharacterTypes(){
@@ -56,28 +59,32 @@ void PrintCharacterTypes(){
     char warriorHealth[] = "Health: 100";
     char warriorAttack[] = "Attack: 20";
     char warriorDefense[] = "Defense: 15";
-    char warriorPotions[] = "Potions: 1";
+    char warriorPotions[] = "Potions: xx";
+    sprintf(warriorPotions, "Potions: %d", NUM_STARTING_POTIONS);
 
     //Archer
     char archer[] = "Archer (a)";
     char archerHealth[] = "Health: 100";
     char archerAttack[] = "Attack: 18";
     char archerDefense[] = "Defense: 7";
-    char archerPotions[] = "Potions: 1";
+    char archerPotions[] = "Potions: xx";
+    sprintf(archerPotions, "Potions: %d", NUM_STARTING_POTIONS);
 
     //Wizard
     char wizard[] = "Wizard (z)";
     char wizardHealth[] = "Health: 100";
     char wizardAttack[] = "Attack: 19";
     char wizardDefense[] = "Defense: 10";
-    char wizardPotions[] = "Potions: 1";
+    char wizardPotions[] = "Potions: xx";
+    sprintf(wizardPotions, "Potions: %d", NUM_STARTING_POTIONS);
 
     //Cleric
     char cleric[] = "Cleric (c)";
     char clericHealth[] = "Health: 100";
     char clericAttack[] = "Attack: 15";
     char clericDefense[] = "Defense: 12";
-    char clericPotions[] = "Potions: 1";
+    char clericPotions[] = "Potions: xx";
+    sprintf(clericPotions, "Potions: %d", NUM_STARTING_POTIONS);
 
     printf("%-20s %-20s %-20s %-20s\n", warrior, archer, wizard, cleric);
     printf("%-20s %-20s %-20s %-20s\n", warriorHealth, archerHealth, wizardHealth, clericHealth);
@@ -99,38 +106,79 @@ const char* GetCharacterType(const Class class) {
 int AttackCharacter(int damage, Character* character) {
     int resultDmg = 0;
 
-    if (damage > character->defense) {
-        resultDmg = (damage - character->defense);
+    if (damage > GetCharacterDefense(character)) {
+        resultDmg = (damage - GetCharacterDefense(character));
         character->currHealth -= resultDmg;
     }
     return resultDmg;
 }
 
-void AddItemToCharacter(Item *itemPtr, Character *character){
-    Item *charItem = character->itemPtr;
+void AddItemToCharacter(Item* itemPtr, Character* character){
+    Item* charItem = character->itemPtr;
 
     if (charItem == NULL) {
-        charItem = itemPtr;
+        character->itemPtr = itemPtr;
+        AddItemBonuses(character);
         return;
     }
 
-    const char* charItemType = GetItemTypeName(charItem->type);
+    const char* newItemType = GetItemTypeName(itemPtr->type);
+    Item* tempItem = charItem;
 
-    while (charItem->nextItem != NULL) {
-        if (strcmp(charItemType, GetItemTypeName(itemPtr->type)) == 0) {
+
+    while (charItem != NULL) {
+        if (strcmp(newItemType, GetItemTypeName(charItem->type)) == 0) {
             ItemLevelUp(charItem);
+            AddItemBonuses(character);
             return;
         }
 
+        tempItem = charItem;
         charItem = charItem->nextItem;
     }
 
-    charItem->nextItem = itemPtr;
+    tempItem->nextItem = itemPtr;
+    AddItemBonuses(character);
+}
+
+int GetCharacterHealth(Character* character) {
+    return character->currHealth + character->itemHealth;
+}
+
+int GetCharacterMaxHealth(Character* character) {
+    return character->maxHealth + character->itemHealth;
+}
+
+int GetCharacterAttack(Character* character) {
+    return character->attack + character->itemAttack;
+}
+
+int GetCharacterDefense(Character* character) {
+    return character->defense + character->itemDefense;
+}
+
+void AddItemBonuses(Character* character) {
+    Item* charItem = character->itemPtr;
+    int health = 0;
+    int attack = 0;
+    int defense = 0;
+
+
+    while (charItem != NULL) {
+        health += charItem->health;
+        attack += charItem->attack;
+        defense += charItem->defense;
+        charItem = charItem->nextItem;
+    }
+
+    character->itemHealth = health;
+    character->itemAttack = attack;
+    character->itemDefense = defense;
 }
 
 
 bool isCharacterDead(Character* character) {
-    if (character->currHealth <= 0){
+    if (GetCharacterHealth(character) <= 0){
         return true;
     }
 

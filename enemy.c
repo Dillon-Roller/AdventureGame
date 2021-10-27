@@ -47,23 +47,23 @@ bool IsEnemyDead(const Enemy* enemy) {
 Enemy* InitGargoyle(const int level) {
   Item* item = InitItem(rand() % last_item); //generate random item
   
-  return InitEnemy(15 * level, 5 * level, 5 * level, "Gargoyle", "A stone-encrusted, statuesque creature that grinds to life upon being encroached.", item);
+  return InitEnemy(25 + 10 * level, 15 + 7 * level, 13 + 5 * level, "Gargoyle", "A stone-encrusted, statuesque creature that grinds to life upon being encroached.", item);
 }
 
 Enemy* InitElemental(const int level) {
   Item* item = InitItem(rand() % last_item);
 
-  return InitEnemy(10 * level, 10 * level, 10 * level, "Elemental", "An ebbing behemoth swirling with rage.", item);
+  return InitEnemy(15 + 10 * level, 10 + 10 * level, 10 + 2 * level, "Elemental", "An ebbing behemoth swirling with rage.", item);
 }
 
 Enemy* InitWisp(const int level) {
   Item* item = InitItem(rand() % last_item);
 
-  return InitEnemy(7 * level, 7 * level, 7 * level, "Wisp", "A bright cloud of sparking particles.", item);
+  return InitEnemy(20 + 5 * level, 12 + 5 * level, 7 + 2 * level, "Wisp", "A bright cloud of sparking particles.", item);
 }
 
 Enemy* InitBoss(const int level) {
   Item* item = InitItem(rand() % last_item);
 
-  return InitEnemy(40 * level, 20 * level, 20 * level, "Boss", "A big thing", item);
+  return InitEnemy(50 * level, 35 * level, 20 * level, "Boss", "A big thing", item);
 }

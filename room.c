@@ -17,6 +17,35 @@ Room* InitRoom(int level) {
 		room->isEnemyDefeated = false;		
 		room->level = level;
 		room->itemPtr = NULL;
+
+		int item = rand() % (last_item + 30);
+
+		switch (item) {
+			case SWORD:
+				room->itemPtr = InitItem(SWORD);
+				break;
+			case SHIELD:
+				room->itemPtr = InitItem(SHIELD);
+				break;
+			case BOW: 
+				room->itemPtr = InitItem(BOW);
+				break;
+			case MUSKET: 
+				room->itemPtr = InitItem(MUSKET);
+				break;
+			case ARMOR:
+				room->itemPtr = InitItem(ARMOR);
+				break;
+			case last_item:
+			case last_item+1:
+			case last_item+2:
+			case last_item+3:
+			case last_item+4:
+				//Potion
+				break;
+			default:
+				break;
+		}
 		
 		if (level < MIN_BOSS_LEVEL) {
 			room->type = rand() % BOSS;	// No bosses allowed under MIN_BOSS_LEVEL
@@ -119,8 +148,8 @@ Room* MoveToRoom(Room *r, char option) {
 			}
 			break;
 		case '4':	// Move back to the previous room
-			r = r->down;
-			if (r != NULL) {
+			if (r->down != NULL) {
+				r = r->down;
 				printf("You return to the previous room:\n");
 				PrintRoom(r);
 			}

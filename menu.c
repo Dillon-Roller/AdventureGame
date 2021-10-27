@@ -23,12 +23,16 @@ Character CharacterCreator() {
 
 		switch (option) {
 		case 'w':
+			CLEAR();
 			return InitWarrior();
 		case 'a':
+			CLEAR();
 			return InitArcher();
 		case 'z':
+			CLEAR();
 			return InitWizard();
 		case 'c':
+			CLEAR();
 			return InitCleric();
 		default:
 			printf("Please select a valid character class.\n");
@@ -92,7 +96,7 @@ void AttackCommand(Room *room, Character *character) {
 		printf("You have already vanquished this enemy!\n");
 	}
 	else {
-		int dmgToEnemy = AttackEnemy(character->attack, room->enemy);
+		int dmgToEnemy = AttackEnemy(GetCharacterAttack(character), room->enemy);
 		printf("You dealt %d damage to the %s.\n", dmgToEnemy, room->enemy->name);
 		
 		if (!IsEnemyDead(room->enemy)) {
@@ -104,7 +108,7 @@ void AttackCommand(Room *room, Character *character) {
 				exit(0);
 			}
 			else {
-				printf("You have %d health remaining.\n", character->currHealth);
+				printf("You have %d health remaining.\n", GetCharacterHealth(character));
 			}
 		}
 		else
@@ -120,22 +124,26 @@ void AttackCommand(Room *room, Character *character) {
 void UsePotionCommand(Character* character) {
 	if (character->numPotions > 0)
 	{
-		if (character->currHealth == character->maxHealth) {
+		int currHealth = GetCharacterHealth(character);
+		int maxHealth = GetCharacterMaxHealth(character);
+
+		if (currHealth == maxHealth) {
 			printf("Your health is already full.\n");
 			return;
 		}
 
-		if (character->currHealth + HEALTH_POTION_VALUE > character->maxHealth)
+		if (currHealth + HEALTH_POTION_VALUE > maxHealth)
 		{
 			character->currHealth = character->maxHealth;
 		}
 		else {
-			character->currHealth += HEALTH_POTION_VALUE;
-			character->numPotions -= 1;
-			printf("You drank a health potion.\n");
-			printf("Your health is now %d.\n", character->currHealth);
-			printf("You have %d %s remaining\n", character->numPotions, character->numPotions == 1 ? "potion" : "potions");
+			character->currHealth += HEALTH_POTION_VALUE;			
 		}
+
+		character->numPotions -= 1;
+		printf("You drank a health potion.\n");
+		printf("Your health is now %d.\n", GetCharacterHealth(character));
+		printf("You have %d %s remaining\n", character->numPotions, character->numPotions == 1 ? "potion" : "potions");
 	}
 	else {
 		printf("You have no more health potions!\n");
