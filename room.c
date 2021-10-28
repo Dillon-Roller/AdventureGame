@@ -56,6 +56,9 @@ Room* InitRoom(int level) {
 		{
 			room->type = rand() % (BOSS + 1);
 		}
+
+		SetRoomInfoByType(room, level, 0);
+		/*
 		switch(room->type) {
 			case DARK:
 				strcpy(room->desc, "You have entered an eerily dark room.");
@@ -77,10 +80,55 @@ Room* InitRoom(int level) {
 				break;
 			default:
 				break;
-		}
+		}*/
 	}
 	
 	return room;
+}
+
+void SetRoomInfoByType(Room* room, int level, bool isEnemyDefeated) {
+	switch (room->type) {
+	case DARK:
+		strcpy(room->desc, "You have entered an eerily dark room.");
+		if (!isEnemyDefeated) { 
+			room->enemy = InitGargoyle(level); 
+		}
+		else {
+			room->enemy = NULL;
+		}
+		break;
+	case BRIGHT:
+		strcpy(room->desc, "This room is blinding with a faint chiming.");
+		if (!isEnemyDefeated) {
+			room->enemy = InitWisp(level);
+		}
+		else {
+			room->enemy = NULL;
+		}
+		break;
+	case DAMP:
+		strcpy(room->desc, "Your feet slosh about as you enter. The air is stale and the ground is wet.");
+		if (!isEnemyDefeated) {
+			room->enemy = InitElemental(level);
+		}
+		else {
+			room->enemy = NULL;
+		}
+		break;
+	case BOSS:
+		strcpy(room->desc, "You enter a palatial hall with great, blood-red and golden tapestries draped over vast windows.\n"
+			"The intricate detail of the woodwork is mesmerizing to gaze upon,\n"
+			"but the hulking beast thrashing toward you is more intriguing.");
+		if (!isEnemyDefeated) {
+			room->enemy = InitBoss(level);
+		}
+		else {
+			room->enemy = NULL;
+		}
+		break;
+	default:
+		break;
+	}
 }
 
 Room* CreateMap(int level, Room *r) { // Recursively create rooms
@@ -184,12 +232,11 @@ void PrintRoom(const Room *r) {
 	if (!r->isEnemyDefeated)
 	{
 		printf("A foe awaits: \n");
-		PrintEnemy(r->enemy);
+		
 	}
-	else {
-		printf("The foe is sprawled atop shimmering mess\n");
-	}
-	
+
+	PrintEnemy(r->enemy);
+
 	printf("You are %d %s deep into this nightmare.", r->level, r->level == 1 ? "level" : "levels");
 	printf("\n");
 }
@@ -230,8 +277,8 @@ void SaveRoom(FILE* fp, const Room *r, const Room *cur) {
   else {
     item = r->itemPtr->type;
   }
-  fprintf(fp, "%d %d %d %d %d\n", r->type, r->level, r->isEnemyDefeated, 
-    item, r == cur ? 1 : 0);
+  fprintf(fp, "%d %d %d %d %d %d\n", r->type, r->level, r->isEnemyDefeated, 
+    item, r->isItemCollected, r == cur ? 1 : 0);
 }
 
 void SaveMap(FILE* fp, const Room *r, const Room *cur) {
@@ -243,3 +290,73 @@ void SaveMap(FILE* fp, const Room *r, const Room *cur) {
   }
 }
 
+Room* LoadRoom(RoomType type, int level, bool isEnemyDefeated, ItemType itemType, bool isItemCollected) {
+	Room* room = (Room*)malloc(sizeof(Room));
+	if (room != NULL) {
+		room->type = type;
+		room->level = level;
+		room->isEnemyDefeated = isEnemyDefeated;
+		room->itemPtr = InitItem(itemType);
+		room->isItemCollected = isItemCollected;
+		SetRoomInfoByType(room, level, isEnemyDefeated);
+	}
+	return room;
+}
+
+Room* LoadMap(FILE* fp, Room** map, Room** curr, Room* previous) {
+	char line[50];
+	Room* room;
+	static bool flag = false;
+
+
+	if (fgets(line, 49, fp)) {
+		int array[6];
+
+		// Room type
+		char* token = strtok(line, " ");
+		array[0] = atoi(token);
+
+		// Room level
+		token = strtok(NULL, " ");
+		array[1] = atoi(token);
+
+		// bool isEnemyDead
+		token = strtok(NULL, " ");
+		array[2] = atoi(token);
+
+		// Room item
+		token = strtok(NULL, " ");
+		array[3] = atoi(token);
+
+		// bool isItemCollected
+		token = strtok(NULL, " ");
+		array[4] = atoi(token);
+
+		// Current room bool
+		token = strtok(NULL, " ");
+		array[5] = atoi(token);
+
+		room = LoadRoom(array[0], array[1], array[2], array[3], array[4]);
+
+		if (!flag) {
+			room->down = NULL;
+			*map = room;
+			flag = true;
+		}
+
+		if (array[5] == 1) {	// Current room
+			*curr = room;
+		}
+
+		if (array[1] > 1) {
+			room->down = previous;
+		}
+
+		room->up = LoadMap(fp, map, curr, room);
+		room->left = LoadMap(fp, map, curr, room);
+		room->right = LoadMap(fp, map, curr, room);
+		return room;
+	}
+
+	return NULL;
+}

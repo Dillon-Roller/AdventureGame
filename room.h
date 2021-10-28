@@ -27,6 +27,7 @@ typedef struct room {
 } Room;
 
 Room* InitRoom(const int level);	// Create and initialize a room
+void SetRoomInfoByType(room, level, isEnemyDefeated);	// Set specific information based on RoomType
 Room* CreateMap(const int level, Room *r); // Recursively create linked rooms
 Room* MoveToRoom(Room *r, const char option);	// Move to an adjacent room
 Item* EnemyDefeated(Room *r);	// Set room bool to true to allow use of room pointers
@@ -35,5 +36,7 @@ void PrintMap(const Room *r);	// Output all rooms
 //void PrintCharacterMap(const Room* r); // Output all rooms that the character has seen
 void SaveMap(FILE* fp, const Room *r, const Room *cur); // Save all rooms to file
 void SaveRoom(FILE* fp, const Room *r, const Room *cur); // Save room to file
+Room* LoadRoom(RoomType type, int level, bool isEnemyDefeated, ItemType itemType, bool isItemCollected);	// Load a room from file
+Room* LoadMap(FILE* fp, Room** map, Room** curr);	// Load the map from file
 
 #endif

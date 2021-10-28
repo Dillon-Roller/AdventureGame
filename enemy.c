@@ -18,11 +18,16 @@ Enemy* InitEnemy(int health, int attack, int defense, char* name, char* desc, It
 }
 
 void PrintEnemy(const Enemy* enemy) {
-  printf("Type: %s\n", enemy->name);
-  printf("Enemy description: %s\n", enemy->desc);
-  printf("Health: %d\n", enemy->health);
-  printf("Attack: %d\n", enemy->attack);
-  printf("Defense: %d\n", enemy->defense);
+	if (enemy != NULL) {
+		printf("Type: %s\n", enemy->name);
+		printf("Enemy description: %s\n", enemy->desc);
+		printf("Health: %d\n", enemy->health);
+		printf("Attack: %d\n", enemy->attack);
+		printf("Defense: %d\n", enemy->defense);
+	}
+	else {
+		printf("The foe is sprawled atop shimmering mess\n");
+	}
 }
 
 int AttackEnemy(int damage, Enemy* enemy) {
