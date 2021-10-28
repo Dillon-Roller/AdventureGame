@@ -202,3 +202,48 @@ void SaveCharacterItems(FILE* fp, Character* character) {
   }
   fprintf(fp, "\n");
 }
+
+Character LoadCharacter(char* characterString) {
+	Character character;
+	int class;
+	char *token;
+	
+	token = strtok(characterString, " ");
+	class = atoi(token);
+	
+	switch (class) {
+		case WIZARD:
+			character = InitWizard();
+			break;
+		case WARRIOR:
+			character = InitWarrior();
+			break;
+		case ARCHER:
+			character = InitArcher();
+			break;
+		case CLERIC:
+			character = InitCleric();
+			break;
+	}
+
+	Item *item;
+	int level;
+	
+	token = strtok(NULL, " ");
+	
+	while (token != NULL && strcmp(token, "\n") != 0) {
+		item = InitItem(atoi(token));
+		token = strtok(NULL, " ");
+		level = atoi(token);
+		
+		for (int i = 0; i < level - 1; i++) {
+			ItemLevelUp(item);
+		}
+		
+		AddItemToCharacter(item, &character);
+		token = strtok(NULL, " ");
+	}
+	
+	return character;
+}
+

@@ -6,6 +6,7 @@
 #include "character.h"
 
 void SaveGame(Character* character, Room* map, Room* currentRoom);
+Character LoadGame(Room* map, Room* currentRoom);
 
 int main(void) {
 	Room* map = CreateMap(1, NULL);
@@ -38,9 +39,12 @@ int main(void) {
 			SaveGame(&character, map, currentRoom);
 		}
 		if (option == 'm') {
-			PrintCharacterMap(map);
+			//PrintCharacterMap(map);
 		}
-    }
+		
+		if (option == 'l') {
+			character = LoadGame(map, currentRoom);
+		}
 
 		// Remove whitespace from stdin
 		/*char c;
@@ -57,8 +61,20 @@ int main(void) {
 void SaveGame(Character* character, Room* map, Room* currentRoom) {
 	  printf("Saving map..");
 	  FILE* fp = fopen("gameMap.txt", "w");
-	  SaveCharacter(fp, &character); // Save character and items
+	  SaveCharacter(fp, character); // Save character and items
 	  SaveMap(fp, map, currentRoom); // Save all rooms
 	  fclose(fp);
 	  printf("Map saved");
+}
+Character LoadGame(Room* map, Room* currentRoom) {
+	printf("Loading save...");
+	FILE* fp = fopen("gameMap.txt", "r");
+	
+	if (fp != NULL) {
+		Character character;
+		
+		char line[50];
+		fgets(line, 49, fp);
+		character = LoadCharacter(line);
+	}
 }

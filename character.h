@@ -55,6 +55,6 @@ void AddItemBonuses(Character* character);
 bool isCharacterDead(Character* character);
 void SaveCharacter(FILE* fp, Character* character);
 void SaveCharacterItems(FILE* fp, Character* character);
-
+Character LoadCharacter(char* characterString);
 
 #endif //ADVENTUREGAME_CHARACTER_H

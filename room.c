@@ -204,7 +204,7 @@ void PrintMap(const Room *r) {
 	}
 }
 
-char* GetCharacterMapString(const Room* r, char* str) {
+/*char* GetCharacterMapString(const Room* r, char* str) {
 	if (r != NULL)
 	{
 		PrintCharacterMap(r->up);
@@ -218,7 +218,7 @@ char* GetCharacterMapString(const Room* r, char* str) {
 			strcat(str, "O");
 		}
 	}
-}
+}*/
 
 
 
