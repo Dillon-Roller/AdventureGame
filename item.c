@@ -4,38 +4,40 @@
 
 Item* InitItem(const ItemType type) {
   Item* item = (Item*)malloc(sizeof(Item));
-  item->type = type;
-  item->nextItem = NULL;
-  item->level = 1;
+  if (item != NULL) {
+      item->type = type;
+      item->nextItem = NULL;
+      item->level = 1;
 
-  switch(item->type) {
-    case SWORD:
-      item->health = 5;
-      item->attack = 10;
-      item->defense = 0;
-      break;
-    case SHIELD:
-      item->health = 5;
-      item->attack = 0;
-      item->defense = 10;
-      break;
-    case BOW:
-      item->health = 5;
-      item->attack = 5;
-      item->defense = 5;
-      break;
-    case MUSKET:
-      item->health = 5;
-      item->attack = 15;
-      item->defense = 5;
-      break;
-    case ARMOR:
-      item->health = 10;
-      item->attack = 0;
-      item->defense = 10;
-      break;
-    default:
-      break;
+      switch (item->type) {
+      case SWORD:
+          item->health = 5;
+          item->attack = 10;
+          item->defense = 0;
+          break;
+      case SHIELD:
+          item->health = 5;
+          item->attack = 0;
+          item->defense = 10;
+          break;
+      case BOW:
+          item->health = 5;
+          item->attack = 5;
+          item->defense = 5;
+          break;
+      case MUSKET:
+          item->health = 5;
+          item->attack = 15;
+          item->defense = 5;
+          break;
+      case ARMOR:
+          item->health = 10;
+          item->attack = 0;
+          item->defense = 10;
+          break;
+      default:
+          break;
+      }
   }
   return item;
 }
@@ -76,6 +78,7 @@ const char* GetItemTypeName(const ItemType type) {
     case MUSKET: return "Musket";
     case ARMOR: return "Armor";
     case POTION: return "Potion";
+    default: return "UNKNOWN_ITEM";
   }
 }
 

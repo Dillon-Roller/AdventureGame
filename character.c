@@ -100,6 +100,7 @@ const char* GetCharacterType(const Class class) {
         case ARCHER: return "Archer";
         case WIZARD: return "Wizard";
         case CLERIC: return "Cleric";
+        default: return "UNKNOWN_CLASS";
     }
 }
 
@@ -224,6 +225,9 @@ Character LoadCharacter(char* characterString) {
 		case CLERIC:
 			character = InitCleric();
 			break;
+        default:
+            character = InitWarrior();
+            break;
 	}
 
 	Item *item;
