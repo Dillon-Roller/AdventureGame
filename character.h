@@ -53,6 +53,8 @@ int GetCharacterAttack(Character* character);
 int GetCharacterDefense(Character* character);
 void AddItemBonuses(Character* character);
 bool isCharacterDead(Character* character);
+void SaveCharacter(FILE* fp, Character* character);
+void SaveCharacterItems(FILE* fp, Character* character);
 
 
 #endif //ADVENTUREGAME_CHARACTER_H

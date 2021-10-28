@@ -33,13 +33,14 @@ int main(void) {
 		{
 			return 0;
 		}
-
+		
 		if (option == 's') {
 			SaveGame(&character, map, currentRoom);
 		}
 		if (option == 'm') {
 			PrintCharacterMap(map);
 		}
+    }
 
 		// Remove whitespace from stdin
 		/*char c;
@@ -54,10 +55,10 @@ int main(void) {
 }
 
 void SaveGame(Character* character, Room* map, Room* currentRoom) {
-	printf("Saving game...");
-	FILE* fp = fopen("gameMap.txt", "w");
-	//SaveCharacter(fp, character);
-	SaveMap(fp, map, currentRoom);
-	fclose(fp);
-	printf("Game saved");
+	  printf("Saving map..");
+	  FILE* fp = fopen("gameMap.txt", "w");
+	  SaveCharacter(fp, &character); // Save character and items
+	  SaveMap(fp, map, currentRoom); // Save all rooms
+	  fclose(fp);
+	  printf("Map saved");
 }

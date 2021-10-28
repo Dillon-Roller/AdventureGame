@@ -189,3 +189,16 @@ bool isCharacterDead(Character* character) {
 
     return false;
 }
+void SaveCharacter(FILE* fp, Character* character) {
+  fprintf(fp, "%d ", character->class);
+  SaveCharacterItems(fp, character);
+}
+
+void SaveCharacterItems(FILE* fp, Character* character) {
+  Item* item = character->itemPtr;
+  while(item != NULL) {
+    fprintf(fp, "%d %d ", item->type, item->level);
+    item = item->nextItem;
+  }
+  fprintf(fp, "\n");
+}
