@@ -35,10 +35,8 @@ int main(void) {
     if(option == 's') {
       printf("Saving map..");
       FILE* fp = fopen("gameMap.txt", "w");
-      //save character type
-      SaveCharacter(fp, &character);
-      //go through each item and print item enum and level
-      SaveMap(fp, map, currentRoom);
+      SaveCharacter(fp, &character); // Save character and items
+      SaveMap(fp, map, currentRoom); // Save all rooms
       fclose(fp);
       printf("Map saved");
     }
