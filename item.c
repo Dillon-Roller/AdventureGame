@@ -34,6 +34,8 @@ Item* InitItem(const ItemType type) {
       item->attack = 0;
       item->defense = 10;
       break;
+    default:
+      break;
   }
   return item;
 }
@@ -73,6 +75,7 @@ const char* GetItemTypeName(const ItemType type) {
     case BOW: return "Bow";
     case MUSKET: return "Musket";
     case ARMOR: return "Armor";
+    case POTION: return "Potion";
   }
 }
 

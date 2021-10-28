@@ -3,7 +3,7 @@
 
 /* enum holding different types of items */
 typedef enum itemType {
-  SWORD, SHIELD, BOW, MUSKET, ARMOR,
+  SWORD, SHIELD, BOW, MUSKET, ARMOR, POTION,
   last_item //used to signal end of enum for generating random enum
 } ItemType;
 

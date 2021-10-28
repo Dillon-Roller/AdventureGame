@@ -50,12 +50,16 @@ Room* Menu(char cmd, Room *room, Character *character) {
 			room = MoveToRoom(room, cmd);
 			break;
 		case 'f':	// Interact with a room's item
-			if (room->itemPtr != NULL) {
+			if (room->itemPtr != NULL && !room->isItemCollected) {
 				AddItemToCharacter(room->itemPtr, character);
+				room->isItemCollected = true;
 				printf("You have acquired a %s!\n", GetItemTypeName(room->itemPtr->type));
 			}
+			else if (room->isItemCollected) {
+				printf("You have already taken the item.\n");
+			}
 			else {
-				printf("There is no item here\n");
+				printf("There is no item here.\n");
 			}
 			break;
 		case 'r':	// Room description
@@ -165,6 +169,7 @@ void PrintCommandList() {
 		"'u':	Use health potion\n"
 		"'a':	Attack enemy\n"
 		"'h':	Show command list\n"
+		"'s':	Save game\n"
 		"'q': 	Quit game\n"
 		"\n"
 	);

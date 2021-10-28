@@ -19,6 +19,7 @@ typedef struct room {
 	Enemy *enemy;	// Enemy guarding the room
 	bool isEnemyDefeated;	// Stores whether enemy is defeated and progression is possible
 	Item *itemPtr; // Single item to add to character upon user input to interact
+	bool isItemCollected;	// Stores whether item has been collected by user
 	struct room *up;	// Forward room
 	struct room *down;	// Previous room
 	struct room *left;	// Left room
@@ -31,6 +32,7 @@ Room* MoveToRoom(Room *r, const char option);	// Move to an adjacent room
 Item* EnemyDefeated(Room *r);	// Set room bool to true to allow use of room pointers
 void PrintRoom(const Room *r);	// Output a room
 void PrintMap(const Room *r);	// Output all rooms
+void PrintCharacterMap(const Room* r); // Output all rooms that the character has seen
 void SaveMap(FILE* fp, const Room *r, const Room *cur);
 void SaveRoom(FILE* fp, const Room *r, const Room *cur);
 

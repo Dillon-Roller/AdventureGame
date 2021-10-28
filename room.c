@@ -17,9 +17,11 @@ Room* InitRoom(int level) {
 		room->isEnemyDefeated = false;		
 		room->level = level;
 		room->itemPtr = NULL;
+		room->isItemCollected = false;
 
-		int item = rand() % (last_item + 30);
-
+		/// TODO: Create generate random item function
+		int item = rand() % (last_item + 40);
+		
 		switch (item) {
 			case SWORD:
 				room->itemPtr = InitItem(SWORD);
@@ -36,12 +38,12 @@ Room* InitRoom(int level) {
 			case ARMOR:
 				room->itemPtr = InitItem(ARMOR);
 				break;
-			case last_item:
-			case last_item+1:
-			case last_item+2:
-			case last_item+3:
-			case last_item+4:
-				//Potion
+			case POTION:		// Potion has higher chance of spawning
+			case POTION+1:
+			case POTION+2:
+			case POTION+3:
+			case POTION+4:
+				room->itemPtr = InitItem(POTION);
 				break;
 			default:
 				break;
@@ -201,6 +203,24 @@ void PrintMap(const Room *r) {
 		PrintMap(r->right);
 	}
 }
+
+char* GetCharacterMapString(const Room* r, char* str) {
+	if (r != NULL)
+	{
+		PrintCharacterMap(r->up);
+		PrintCharacterMap(r->left);
+		PrintCharacterMap(r->right);
+
+		if (r->isEnemyDefeated) {
+			strcat(str, "X");
+		}
+		else {
+			strcat(str, "O");
+		}
+	}
+}
+
+
 
 void SaveRoom(FILE* fp, const Room *r, const Room *cur) {
   int item;

@@ -116,6 +116,11 @@ int AttackCharacter(int damage, Character* character) {
 void AddItemToCharacter(Item* itemPtr, Character* character){
     Item* charItem = character->itemPtr;
 
+    if (itemPtr->type == POTION) {
+        character->numPotions++;
+        return;
+    }
+
     if (charItem == NULL) {
         character->itemPtr = itemPtr;
         AddItemBonuses(character);

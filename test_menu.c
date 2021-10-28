@@ -5,6 +5,8 @@
 #include "room.h"
 #include "character.h"
 
+void SaveGame(Character* character, Room* map, Room* currentRoom);
+
 int main(void) {
 	Room* map = CreateMap(1, NULL);
 	Character character = CharacterCreator();
@@ -32,13 +34,12 @@ int main(void) {
 			return 0;
 		}
 
-    if(option == 's') {
-      printf("Saving map..");
-      FILE* fp = fopen("gameMap.txt", "w");
-      SaveMap(fp, map, currentRoom);
-      fclose(fp);
-      printf("Map saved");
-    }
+		if (option == 's') {
+			SaveGame(&character, map, currentRoom);
+		}
+		if (option == 'm') {
+			PrintCharacterMap(map);
+		}
 
 		// Remove whitespace from stdin
 		/*char c;
@@ -50,4 +51,13 @@ int main(void) {
 		currentRoom = Menu(option, currentRoom, &character);
 
 	} while (1);	
+}
+
+void SaveGame(Character* character, Room* map, Room* currentRoom) {
+	printf("Saving game...");
+	FILE* fp = fopen("gameMap.txt", "w");
+	//SaveCharacter(fp, character);
+	SaveMap(fp, map, currentRoom);
+	fclose(fp);
+	printf("Game saved");
 }
