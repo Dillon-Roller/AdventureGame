@@ -4,6 +4,7 @@
 
 Item* InitItem(const ItemType type) {
   Item* item = (Item*)malloc(sizeof(Item));
+
   if (item != NULL) {
       item->type = type;
       item->nextItem = NULL;
@@ -70,6 +71,34 @@ void ItemLevelUp(Item* item) {
   item->level++;
 }
 
+void ItemLevelUp(Item* item) {
+  switch(item->type) {
+    case SWORD:
+      item->health += 2;
+      item->attack += 2;
+      break;
+    case SHIELD:
+      item->health += 2;
+      item->defense += 2;
+      break;
+    case BOW:
+      item->health += 2;
+      item->attack += 2;
+      item->defense += 2;
+      break;
+    case MUSKET:
+      item->health += 2;
+      item->attack += 2;
+      item->defense += 2;
+      break;
+    case ARMOR:
+      item->health += 2;
+      item->defense += 2;
+      break; 
+  }
+  item->level++;
+}
+
 const char* GetItemTypeName(const ItemType type) {
   switch(type) {
     case SWORD: return "Sword";
@@ -101,4 +130,3 @@ void PrintItemList(Item* itemPtr) {
 void PrintItemName(const Item* item) {
   printf("%s * %d\n", GetItemTypeName(item->type), item->level);
 }
-

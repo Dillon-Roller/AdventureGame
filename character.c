@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "character.h"
+#include "item.h"
 
 // Creates player
 Character InitCharacter(int health, int attack, int defense, Class class) {
@@ -91,7 +92,6 @@ void PrintCharacterTypes(){
     printf("%-20s %-20s %-20s %-20s\n", warriorAttack, archerAttack, wizardAttack, clericAttack);
     printf("%-20s %-20s %-20s %-20s\n", warriorDefense, archerDefense, wizardDefense, clericDefense);
     printf("%-20s %-20s %-20s %-20s\n", warriorPotions, archerPotions, wizardPotions, clericPotions);
-
 }
 
 const char* GetCharacterType(const Class class) {
