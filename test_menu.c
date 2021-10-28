@@ -75,7 +75,7 @@ Character LoadGame(Room** map, Room** currentRoom) {
 		char line[50];
 		fgets(line, 49, fp);
 		character = LoadCharacter(line);
-		LoadMap(fp,map, currentRoom);
+		LoadMap(fp,map, currentRoom, NULL);
 	}
   return character;
 }
