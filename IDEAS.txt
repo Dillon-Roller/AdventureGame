@@ -1,48 +1,5 @@
-Enemy
-	void FreeEnemy(Enemy **enemy) { free(*enemy); *enemy = NULL; }	// Don't know if ** will work
-	char name[50];	// "Gargoyle"
-	char desc[250];	// "A stone-encrusted, statuesque creature that grinds to life upon being encroached."
-
-Item
-	rename GetTypeName -> GetItemTypeName
-	void PrintItemList(Item *itemPtr) { while (itemPtr != NULL) { printItem(itemPtr); itemPtr = itemPtr->next; }}
-	//merge items to become better versions instead of stacking stats (ex. bow = 5, 5, 5; bow2 = 7, 7, 7)
-	//if bow in list, bow->attack += 2...
-	//add int level to item to reflect change bow -> bow * 2 
-	//PrintItemName(Item *itemPtr) { printf("%s * %d", GetItemTypeName(), itemPtr->level);
-	void ItemLevelUp(Item *itemPtr) { 
-		switch (itemPtr->type) {
-			case BOW:
-				itemPtr->health += 2;
-				itemPtr->attack += 2;
-				itemPtr->defense += 2;
-				break;
-			default:
-				break;
-		}
-	}
-	
-Character
-	remove PrintItems
-	rename Attack -> AttackCharacter
-	void AddItemToCharacter(Item *itemPtr, Character *character) { 
-		Item *charItem = character->itemPtr;
-		
-		// Empty inventory
-		if (charItem == NULL) {
-			charItem = itemPtr;
-			return;
-		}
-		
-		// Search for same item type in inventory
-		while (charItem->next != NULL) { 
-			if (strcmp(charItem->name, itemPtr->name) == 0) {
-				ItemLevelUp(charItem);
-				return;
-			}	
-			
-			charItem = charItem->next; 
-		}
-		
-		charItem->next = itemPtr;
-	}
+Saves
+	Add date and time to file name
+	Create menu upon launch to continue
+	Add character information to save on first line
+	Read character information "Wizard Health:XXX Attack:XXX..." to display on save selector

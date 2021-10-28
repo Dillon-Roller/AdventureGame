@@ -7,6 +7,7 @@
 Character CharacterCreator();
 Room* Menu(char cmd, Room *room, Character *character);
 void AttackCommand(Room *room, Character *character);
+void UsePotionCommand(Character* character);
 void PrintCommandList();
 
 #endif

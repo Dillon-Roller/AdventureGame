@@ -1,73 +1,100 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
 
 #include "menu.h"
 
+// Clear screen macros
+#ifndef _MSC_BUILD	// If not using Visual Studio
+	#include <unistd.h>
+#endif
+// linux macro
+#ifdef _WIN32	// Windows OS
+	#define CLEAR() system("cls")
+#else	// Other OS
+	#define CLEAR() system("clear")
+#endif
+
 Character CharacterCreator() {
-	printf("Select your character type:\n\n");
-	PrintCharacterTypes();
-	char option = getchar();
-	while (!isalpha(option)) { option = getchar(); } // Ensure only alphabetic characters
+	do {
+		printf("Select your character type:\n\n");
+		PrintCharacterTypes();
+
+		char option = getchar();
+		while (!isalpha(option)) { option = getchar(); } // Ensure only alphabetic characters
+
+		switch (option) {
+		case 'w':
+			CLEAR();
+			return InitWarrior();
+		case 'a':
+			CLEAR();
+			return InitArcher();
+		case 'z':
+			CLEAR();
+			return InitWizard();
+		case 'c':
+			CLEAR();
+			return InitCleric();
+		default:
+			printf("Please select a valid character class.\n");
+			break;
+		}
+	} while (1);
 }
 
 Room* Menu(char cmd, Room *room, Character *character) {	
 	switch(cmd) {
 		case '1':	// Move to the forward room
-			if (room->isEnemyDefeated && room->up != NULL)
-			{
-				room = room->up;
-				PrintRoom(room);
-			}
-			break;
 		case '2':	// Move to the left room
-			if (room->isEnemyDefeated && room->left != NULL)
-			{
-				room = room->left;
-				PrintRoom(room);
-			}
-			break;
 		case '3':	// Move to the right room
-			if (room->isEnemyDefeated && room->right != NULL)
-			{
-				room = room->right;
-				PrintRoom(room);
-			}
-			break;
 		case '4':	// Move back to the previous room
-			room = room->down;
-			printf("You return to the previous room:\n");
-			PrintRoom(room);
+			room = MoveToRoom(room, cmd);
 			break;
 		case 'f':	// Interact with a room's item
-			if (room->itemPtr != NULL) {
+			if (room->itemPtr != NULL && !room->isItemCollected) {
 				AddItemToCharacter(room->itemPtr, character);
+				room->isItemCollected = true;
 				printf("You have acquired a %s!\n", GetItemTypeName(room->itemPtr->type));
 			}
+			else if (room->isItemCollected) {
+				printf("You have already taken the item.\n");
+			}
 			else {
-				printf("There is no item here\n");
+				printf("There is no item here.\n");
 			}
 			break;
 		case 'r':	// Room description
 			PrintRoom(room);
 			break;
 		case 'e':	// Enemy description
-			PrintEnemy(room->enemy);
+				PrintEnemy(room->enemy);
 			break;
 		case 'i':	// List inventory
-			PrintItemList(character->itemPtr);
+			if (character->itemPtr != NULL) {
+				PrintItemList(character->itemPtr);
+			}
+			else {
+				printf("Your inventory is empty.\n");
+			}
 			break;
 		case 'c':	// Show character information
 			PrintCharacter(character);
 			break;
 		case 'u':	// Use health potion
+			UsePotionCommand(character);
 			break;
 		case 'a':	// Attack enemy
 			AttackCommand(room, character);
+			break;
+		case 'h':
+			PrintCommandList();
 			break;
 		default:
 			break;		
 	}
 
-	return 0;
+	return room;
 }
 
 void AttackCommand(Room *room, Character *character) {
@@ -75,21 +102,57 @@ void AttackCommand(Room *room, Character *character) {
 		printf("You have already vanquished this enemy!\n");
 	}
 	else {
-		AttackEnemy(character->attack, room->enemy);
-		printf("You dealt %d damage to the %s.\n", character->attack, room->enemy->name);
+		int dmgToEnemy = AttackEnemy(GetCharacterAttack(character), room->enemy);
+		printf("You dealt %d damage to the %s.\n", dmgToEnemy, room->enemy->name);
 		
 		if (!IsEnemyDead(room->enemy)) {
-			AttackCharacter(room->enemy->attack, character);
-			printf("The %s dealt %d damage to you!\n", room->enemy->name, room->enemy->attack);
-			printf("You have %d health remaining.\n", character->health);
+			int dmgToChar = AttackCharacter(room->enemy->attack, character);
+			printf("The %s dealt %d damage to you!\n", room->enemy->name, dmgToChar);
+			if (isCharacterDead(character)) {
+				CLEAR();
+				printf("Your nightmare envelops you.\n");
+				exit(0);
+			}
+			else {
+				printf("You have %d health remaining.\n", GetCharacterHealth(character));
+			}
 		}
 		else
 		{
 			Item *item = EnemyDefeated(room);
 			AddItemToCharacter(item, character);
 			printf("You have defeated the %s!\n", room->enemy->name);
-			printf("A %s has been added to your inventory\n", item->name);
+			printf("A %s has been added to your inventory\n", GetItemTypeName(item->type));
 		}				
+	}
+}
+
+void UsePotionCommand(Character* character) {
+	if (character->numPotions > 0)
+	{
+		int currHealth = GetCharacterHealth(character);
+		int maxHealth = GetCharacterMaxHealth(character);
+
+		if (currHealth == maxHealth) {
+			printf("Your health is already full.\n");
+			return;
+		}
+
+		if (currHealth + HEALTH_POTION_VALUE > maxHealth)
+		{
+			character->currHealth = character->maxHealth;
+		}
+		else {
+			character->currHealth += HEALTH_POTION_VALUE;			
+		}
+
+		character->numPotions -= 1;
+		printf("You drank a health potion.\n");
+		printf("Your health is now %d.\n", GetCharacterHealth(character));
+		printf("You have %d %s remaining\n", character->numPotions, character->numPotions == 1 ? "potion" : "potions");
+	}
+	else {
+		printf("You have no more health potions!\n");
 	}
 }
 
@@ -108,6 +171,8 @@ void PrintCommandList() {
 		"'u':	Use health potion\n"
 		"'a':	Attack enemy\n"
 		"'h':	Show command list\n"
+		"'s': 	Save the game (can only save 1 game currently)\n"
+		"'l': 	Load last saved game\n"
 		"'q': 	Quit game\n"
 		"\n"
 	);
