@@ -31,7 +31,7 @@ Room* MoveToRoom(Room *r, const char option);	// Move to an adjacent room
 Item* EnemyDefeated(Room *r);	// Set room bool to true to allow use of room pointers
 void PrintRoom(const Room *r);	// Output a room
 void PrintMap(const Room *r);	// Output all rooms
-void SaveMap(FILE* fp, const Room *r, const Room *cur);
-void SaveRoom(FILE* fp, const Room *r, const Room *cur);
+void SaveMap(FILE* fp, const Room *r, const Room *cur); // Save all rooms to file
+void SaveRoom(FILE* fp, const Room *r, const Room *cur); // Save room to file
 
 #endif
