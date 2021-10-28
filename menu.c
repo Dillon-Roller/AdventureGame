@@ -165,6 +165,8 @@ void PrintCommandList() {
 		"'u':	Use health potion\n"
 		"'a':	Attack enemy\n"
 		"'h':	Show command list\n"
+    "'s' : Save the game (can only save 1 game currently)\n"
+    "'l' : Load last saved game\n"
 		"'q': 	Quit game\n"
 		"\n"
 	);
