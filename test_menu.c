@@ -44,8 +44,9 @@ int main(void) {
 		
 		if (option == 'l') {
 			character = LoadGame(map, currentRoom);
+      printf("%d %d", character.class, character.maxHealth);
 		}
-
+    
 		// Remove whitespace from stdin
 		/*char c;
 		while (isspace(c = getchar())) {}
@@ -69,12 +70,12 @@ void SaveGame(Character* character, Room* map, Room* currentRoom) {
 Character LoadGame(Room* map, Room* currentRoom) {
 	printf("Loading save...");
 	FILE* fp = fopen("gameMap.txt", "r");
-	
+	Character character = InitWarrior();
 	if (fp != NULL) {
-		Character character;
 		
 		char line[50];
 		fgets(line, 49, fp);
 		character = LoadCharacter(line);
 	}
+  return character;
 }
