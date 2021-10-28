@@ -224,7 +224,7 @@ void PrintMap(const Room *r) {
 
 void SaveRoom(FILE* fp, const Room *r, const Room *cur) {
   int item;
-  if(r->itemPtr == NULL) {
+  if(r->itemPtr == NULL || r->isItemCollected) {
     item = -1;
   }
   else {

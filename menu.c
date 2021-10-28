@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <ctype.h>
 
 #include "menu.h"
@@ -7,6 +8,7 @@
 #ifndef _MSC_BUILD	// If not using Visual Studio
 	#include <unistd.h>
 #endif
+// linux macro
 #ifdef _WIN32	// Windows OS
 	#define CLEAR() system("cls")
 #else	// Other OS
