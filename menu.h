@@ -1,3 +1,5 @@
+#include <stdlib.h>
+
 #include "room.h"
 #include "character.h"
 
