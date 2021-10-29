@@ -16,13 +16,13 @@
 #define CLEAR() system("clear")
 #endif
 
-Character CharacterCreator(Room** map, Room** currentRoom);
-void PrintSetting();
-void SaveGame(Character* character, Room* map, Room* currentRoom);
-Character LoadGame(Room** map, Room** currentRoom);
-Room* Menu(char cmd, Room *room, Character *character);
-void AttackCommand(Room *room, Character *character);
-void UsePotionCommand(Character* character);
-void PrintCommandList();
+Character CharacterCreator(Room** map, Room** currentRoom);	// Create a new character or load an existing character
+void PrintSetting();	// Output the story setting
+void SaveGame(Character* character, Room* map, Room* currentRoom);	// Save the game
+Character LoadGame(Room** map, Room** currentRoom);	// Load the game
+Room* Menu(char cmd, Room *room, Character *character);	// The main menu and commands
+void AttackCommand(Room *room, Character *character);	// Function for attacking
+void UsePotionCommand(Character* character);	// Use a potion to heal the character
+void PrintCommandList();	// Output a list of commands
 
 #endif

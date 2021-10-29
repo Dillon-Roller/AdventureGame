@@ -5,14 +5,14 @@
 #include "menu.h"
 
 Character CharacterCreator(Room** map, Room** currentRoom) {
-	Character character;
 	printf("Do you want to load a previous save? (y or n)\n");
 
+	// Determine if user wants to load
 	while (1) {
 		char option = getchar();
 		while (!isalpha(option)) { option = getchar(); } // Ensure only alphabetic characters
 
-		if (option == 'y') {
+		if (option == 'y') {	// Load saved game
 			return LoadGame(map, currentRoom);
 		}
 		else if (option == 'n') {
@@ -72,15 +72,21 @@ void SaveGame(Character* character, Room* map, Room* currentRoom) {
 
 Character LoadGame(Room** map, Room** currentRoom) {
 	printf("Loading save...\n");
-	FILE* fp = fopen("saveFile.txt", "r");
 	Character character = InitWarrior();
-	if (fp != NULL) {
-		char line[50];
-		fgets(line, 49, fp);
-		character = LoadCharacter(line);
-		LoadMap(fp, map, currentRoom, NULL);
-		printf("Save loaded\n\n\n");
+	if (access("saveFile.txt", 0) == 0) {	// If file exists
+		FILE* fp = fopen("saveFile.txt", "r");
+		if (fp != NULL) {
+			char line[50];
+			fgets(line, 49, fp);
+			character = LoadCharacter(line);
+			LoadMap(fp, map, currentRoom, NULL);
+			printf("Save loaded\n\n\n");
+		}
 	}
+	else {
+		printf("Couldn't find save file. Starting as a Warrior.\n");
+	}
+	
 	return character;
 }
 
@@ -130,7 +136,7 @@ Room* Menu(char cmd, Room *room, Character *character) {
 		case 'a':	// Attack enemy
 			AttackCommand(room, character);
 			break;
-		case 'h':
+		case 'h':	// Show command list
 			PrintCommandList();
 			break;
 		default:
@@ -141,26 +147,27 @@ Room* Menu(char cmd, Room *room, Character *character) {
 }
 
 void AttackCommand(Room *room, Character *character) {
-	if (room->isEnemyDefeated) {
+	if (room->isEnemyDefeated) {	// Enemy is defeated
 		printf("You have already vanquished this enemy!\n");
 	}
-	else {
+	else {	// Enemy is alive
 		int dmgToEnemy = AttackEnemy(GetCharacterAttack(character), room->enemy);
 		printf("You dealt %d damage to the %s.\n", dmgToEnemy, room->enemy->name);
 		
-		if (!IsEnemyDead(room->enemy)) {
+		if (!IsEnemyDead(room->enemy)) {	// Enemy remains alive
 			int dmgToChar = AttackCharacter(room->enemy->attack, character);
 			printf("The %s dealt %d damage to you!\n", room->enemy->name, dmgToChar);
-			if (isCharacterDead(character)) {
+
+			if (isCharacterDead(character)) {	// Character is defeated
 				CLEAR();
 				printf("Your nightmare envelops you.\n");
 				exit(0);
 			}
-			else {
+			else {	// Character remains alive
 				printf("You have %d health remaining.\n", GetCharacterHealth(character));
 			}
 		}
-		else
+		else	// Enemy is now defeated
 		{
 			printf("You have defeated the %s!\n", room->enemy->name);
 			Item *item = EnemyDefeated(room);
@@ -181,7 +188,7 @@ void UsePotionCommand(Character* character) {
 			return;
 		}
 
-		if (currHealth + HEALTH_POTION_VALUE > maxHealth)
+		if (currHealth + HEALTH_POTION_VALUE > maxHealth)	// Cannot restore more health than maxHealth
 		{
 			character->currHealth = character->maxHealth;
 		}
@@ -194,7 +201,7 @@ void UsePotionCommand(Character* character) {
 		printf("Your health is now %d.\n", GetCharacterHealth(character));
 		printf("You have %d %s remaining\n", character->numPotions, character->numPotions == 1 ? "potion" : "potions");
 	}
-	else {
+	else {	// Character has no potions
 		printf("You have no more health potions!\n");
 	}
 }
@@ -214,7 +221,7 @@ void PrintCommandList() {
 		"'u': \tUse health potion\n"
 		"'a': \tAttack enemy\n"
 		"'h': \tShow command list\n"
-    "'m': \tShow map (H - current location, X - enemy defeated)\n"
+		"'m': \tShow map (H - current location, X - enemy defeated)\n"
 		"'s': \tSave the game (can only save 1 game currently)\n"
 		"'l': \tLoad last saved game\n"
 		"'q': \tQuit game\n"

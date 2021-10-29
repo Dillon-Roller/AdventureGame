@@ -6,6 +6,7 @@
 #ifndef ROOM_H_
 #define ROOM_H_
 
+#define STARTING_LEVEL 1	// Beginning level when creating rooms
 #define MAX_LEVEL 4 // Number of tree levels
 #define MIN_BOSS_LEVEL 3	// Minimum level at which bosses can be placed
 

@@ -39,18 +39,18 @@ void PrintEnemyAscii(const Enemy* enemy) {
 		printf("Attack: %d\n", enemy->attack);
 		printf("Defense: %d\n", enemy->defense);
     
-    if(strcmp(enemy->name, "Gargoyle") == 0) {
-      printGargoyle();
-    }
-    else if(strcmp(enemy->name, "Elemental") == 0) {
-      printElemental();
-    }
-    else if(strcmp(enemy->name, "Wisp") == 0) {
-      printWisp();
-    }
-    else {
-      printBoss();
-    }
+		if(strcmp(enemy->name, "Gargoyle") == 0) {
+		  printGargoyle();
+		}
+		else if(strcmp(enemy->name, "Elemental") == 0) {
+		  printElemental();
+		}
+		else if(strcmp(enemy->name, "Wisp") == 0) {
+		  printWisp();
+		}
+		else {
+		  printBoss();
+		}
 	}
 	else {
 		printf("The foe is sprawled atop shimmering mess\n");
@@ -78,7 +78,7 @@ bool IsEnemyDead(const Enemy* enemy) {
 
 Enemy* FreeEnemy(Enemy* enemy) {
 	free(enemy);
-	return NULL;
+	return NULL;	// Set enemy link to NULL
 }
 
 Enemy* InitGargoyle(const int level) {

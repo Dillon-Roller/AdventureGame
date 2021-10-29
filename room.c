@@ -9,7 +9,7 @@ Room* InitRoom(int level) {
 	Room *room = (Room*)malloc(sizeof(Room));
 	
 	if (room != NULL) {
-		if (level == 0) {
+		if (level == STARTING_LEVEL) {	// Call srand once [only one level 1 room]
 			time_t t;
 			srand((unsigned) time(&t));
 		}
@@ -58,29 +58,6 @@ Room* InitRoom(int level) {
 		}
 
 		SetRoomInfoByType(room, level, 0);
-		/*
-		switch(room->type) {
-			case DARK:
-				strcpy(room->desc, "You have entered an eerily dark room.");
-				room->enemy = InitGargoyle(level);
-				break;
-			case BRIGHT:
-				strcpy(room->desc, "This room is blinding with a faint chiming.");
-				room->enemy = InitWisp(level);
-				break;
-			case DAMP:
-				strcpy(room->desc, "Your feet slosh about as you enter. The air is stale and the ground is wet.");
-				room->enemy = InitElemental(level);
-				break;
-			case BOSS:
-				strcpy(room->desc,  "You enter a palatial hall with great, blood-red and golden tapestries draped over vast windows.\n"
-									"The intricate detail of the woodwork is mesmerizing to gaze upon,\n"
-									"but the hulking beast thrashing toward you is more intriguing.");
-				room->enemy = InitBoss(level);
-				break;
-			default:
-				break;
-		}*/
 	}
 	
 	return room;
@@ -146,7 +123,7 @@ Room* CreateMap(int level, Room *r) { // Recursively create rooms
 		room->left = CreateMap(level+1, room);
 		room->right = CreateMap(level+1, room);
 	}
-	if (level > 0) {
+	if (level > STARTING_LEVEL) {	// Root shouldn't have a valid down link
 		room->down = r;
 	}
 	else {
@@ -233,14 +210,12 @@ void PrintRoom(const Room *r) {
 	
 	if (!r->isEnemyDefeated)
 	{
-		printf("A foe awaits: \n");
-		
+		printf("A foe awaits: \n");		
 	}
 
-	PrintEnemy(r->enemy);
+	PrintEnemy(r->enemy);	// Enemy info if alive
 
-
-
+	// ASCII art
   if(r->isEnemyDefeated) {
     printDungeon();
   }
@@ -262,8 +237,9 @@ void PrintRoom(const Room *r) {
             break;
     }
   }
+
   printf("You are %d %s deep into this nightmare.", r->level, r->level == 1 ? "level" : "levels");
-	printf("\n");
+  printf("\n");
 }
 
 void PrintMap(const Room *r) {
@@ -279,10 +255,10 @@ void PrintMap(const Room *r) {
 void GetCharacterMapString(const Room* r, const Room* currentRoom, char* str) {
 	if (r != NULL)
 	{
-		if (r == currentRoom) {
+		if (r == currentRoom) {	// Current room
 			strcat(str, "H");
 		}
-		else if (r->isEnemyDefeated) {
+		else if (r->isEnemyDefeated) {	// Enemy defeated in room
 			strcat(str, "X");
 		}
 		else {
@@ -315,12 +291,14 @@ void PrintCharacterMap(const Room* map, const Room* currentRoom) {
 
 void SaveRoom(FILE* fp, const Room *r, const Room *cur) {
   int item;
-  if(r->itemPtr == NULL || r->isItemCollected) {
+  if(r->itemPtr == NULL || r->isItemCollected) {	// Disallow acquired item to spawn upon load
     item = -1;
   }
   else {
     item = r->itemPtr->type;
   }
+
+  // Save only the necessary info to reconstruct room
   fprintf(fp, "%d %d %d %d %d %d\n", r->type, r->level, r->isEnemyDefeated, 
     item, r->isItemCollected, r == cur ? 1 : 0);
 }
@@ -350,7 +328,7 @@ Room* LoadRoom(RoomType type, int level, bool isEnemyDefeated, ItemType itemType
 Room* LoadMap(FILE* fp, Room** map, Room** curr, Room* previous) {
 	char line[50];
 	Room* room;
-	static bool flag = false;
+	static bool flag = false;	// Flag for root room
 
 
 	if (fgets(line, 49, fp)) {
@@ -382,7 +360,7 @@ Room* LoadMap(FILE* fp, Room** map, Room** curr, Room* previous) {
 
 		room = LoadRoom(array[0], array[1], array[2], array[3], array[4]);
 
-		if (!flag) {
+		if (!flag) {	// Root room
 			room->down = NULL;
 			*map = room;
 			flag = true;
@@ -396,7 +374,7 @@ Room* LoadMap(FILE* fp, Room** map, Room** curr, Room* previous) {
 			room->down = previous;
 		}
 
-		if (array[1] == MAX_LEVEL) {
+		if (array[1] == MAX_LEVEL) {	// Highest level room, NULL forward links
 			room->up = NULL;
 			room->left = NULL;
 			room->right = NULL;

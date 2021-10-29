@@ -6,7 +6,7 @@
 #include "character.h"
 
 int main(void) {
-	Room* map = CreateMap(1, NULL);
+	Room* map = CreateMap(STARTING_LEVEL, NULL);
 	Room* currentRoom = map;
 	Character character = CharacterCreator(&map, &currentRoom);
 
@@ -40,7 +40,8 @@ int main(void) {
 				while (!isalpha(option)) { option = getchar(); } // Ensure only alphabetic characters
 
 				if (option == 'y') {
-					character = LoadGame(map, currentRoom);
+					character = LoadGame(&map, &currentRoom);
+					PrintRoom(currentRoom);
 					break;
 				}
 				else if (option == 'n') {
