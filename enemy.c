@@ -102,5 +102,5 @@ Enemy* InitWisp(const int level) {
 Enemy* InitBoss(const int level) {
   Item* item = InitItem(rand() % last_item);
 
-  return InitEnemy(50 * level, 35 * level, 20 * level, "Boss", "A big thing", item);
+  return InitEnemy(50 * level, 35 * level, 20 * level, "Boss", "He's alright outside of work.", item);
 }
