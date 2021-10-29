@@ -191,7 +191,8 @@ bool isCharacterDead(Character* character) {
     return false;
 }
 void SaveCharacter(FILE* fp, Character* character) {
-  fprintf(fp, "%d ", character->class);
+  fprintf(fp, "%d %d %d ", character->class, character->currHealth, 
+    character->numPotions);
   SaveCharacterItems(fp, character);
 }
 
@@ -209,7 +210,7 @@ Character LoadCharacter(char* characterString) {
 	int class;
 	char *token;
 	
-	token = strtok(characterString, " ");
+	token = strtok(characterString, " "); //first number is class
 	class = atoi(token);
 	
 	switch (class) {
@@ -229,6 +230,12 @@ Character LoadCharacter(char* characterString) {
             character = InitWarrior();
             break;
 	}
+
+  token = strtok(NULL, " "); //second number is health
+  character.currHealth = atoi(token);
+
+  token = strtok(NULL, " "); //third number is number of potions
+  character.numPotions = atoi(token);
 
 	Item *item;
 	int level;
