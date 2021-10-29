@@ -8,3 +8,5 @@ Character Save
 	load current health into character
 Rename test_menu.c to main.c
 Implement Terrence's ASCII art
+CLEAR() more?
+Linux macro for clear

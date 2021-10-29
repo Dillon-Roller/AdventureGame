@@ -5,10 +5,9 @@
 #define MENU_H_
 
 // Clear screen macros
-#ifndef _MSC_BUILD	// If not using Visual Studio
+#if defined __linux__ || !defined _MSC_BUILD	// Linux OS or not Visual Studio
 #include <unistd.h>
 #endif
-// linux macro
 #ifdef _WIN32	// Windows OS
 #define CLEAR() system("cls")
 #else	// Other OS
