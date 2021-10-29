@@ -240,6 +240,10 @@ void PrintRoom(const Room *r) {
 	printf("You are %d %s deep into this nightmare.", r->level, r->level == 1 ? "level" : "levels");
 	printf("\n");
 
+  if(r->isEnemyDefeated) {
+    printDungeon();
+  }
+  else {
     switch (r->type) {
         case DARK:
             return printGargoyleDungeon();
@@ -256,6 +260,7 @@ void PrintRoom(const Room *r) {
         default:
             break;
     }
+  }
 }
 
 void PrintMap(const Room *r) {
