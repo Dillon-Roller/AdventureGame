@@ -96,22 +96,22 @@ void PrintItem(const Item* item) {
 
     switch (item->type) {
         case SWORD:
-            return printSword();
+            printSword();
             break;
         case SHIELD:
-            return printShield();
+            printShield();
             break;
         case BOW:
-            return printBow();
+            printBow();
             break;
         case MUSKET:
-            return printMusket();
+            printMusket();
             break;
         case ARMOR:
-            return printArmor();
+            printArmor();
             break;
         case POTION:
-            return printPotion();
+            printPotion();
             break;
         default:
             return;
