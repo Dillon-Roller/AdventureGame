@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-
+#include "asciiArt.h"
 #include "room.h"
 
 Room* InitRoom(int level) {
@@ -239,6 +239,23 @@ void PrintRoom(const Room *r) {
 
 	printf("You are %d %s deep into this nightmare.", r->level, r->level == 1 ? "level" : "levels");
 	printf("\n");
+
+    switch (room->type) {
+        case DARK:
+            return printGargoyleDungeon();
+            break;
+        case BRIGHT:
+            return printWispDungeon();
+            break;
+        case DAMP:
+            return printElementalDungeon();
+            break;
+        case BOSS:
+            return printBossDungeon();
+            break;
+        default:
+            break;
+    }
 }
 
 void PrintMap(const Room *r) {

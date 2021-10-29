@@ -11,6 +11,7 @@ void printShield();
 void printBow();
 void printMusket();
 void printArmor();
+void printPotion();
 
 //dungeon
 void printDungeon();

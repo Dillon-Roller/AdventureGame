@@ -112,6 +112,22 @@ void printArmor(){
 
 }
 
+void printPotion(){
+    //Potion
+    printf("Potion\n");
+    printf("    _\n");
+    printf("   [_ ]\n");
+    printf(" .-'. '-.\n");
+    printf("/:;/ _.-'\\\n");
+    printf("|:._   .-|\n");
+    printf("|:._     |\n");
+    printf("|:._     |\n");
+    printf("|:._     |\n");
+    printf("|:._     |\n");
+    printf("`-.____.-'\n");
+    printf("\n");
+}
+
 //Dungeon
 void printDungeon(){
     //Dungeon
