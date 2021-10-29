@@ -4,16 +4,16 @@
 
 #include "menu.h"
 
-Character CharacterCreator() {
-	printf("Do you want to load a previous save? (y or n)");
+Character CharacterCreator(Room** map, Room** currentRoom) {
+	Character character;
+	printf("Do you want to load a previous save? (y or n)\n");
 
 	while (1) {
 		char option = getchar();
 		while (!isalpha(option)) { option = getchar(); } // Ensure only alphabetic characters
 
 		if (option == 'y') {
-			//SaveSelector();
-			break;
+			return LoadGame(map, currentRoom);
 		}
 		else if (option == 'n') {
 			break;
@@ -31,21 +31,57 @@ Character CharacterCreator() {
 		switch (option) {
 		case 'w':
 			CLEAR();
+			PrintSetting();
 			return InitWarrior();
 		case 'a':
 			CLEAR();
+			PrintSetting();
 			return InitArcher();
 		case 'z':
 			CLEAR();
+			PrintSetting();
 			return InitWizard();
 		case 'c':
 			CLEAR();
+			PrintSetting();
 			return InitCleric();
 		default:
 			printf("Please select a valid character class.\n");
 			break;
 		}
 	} while (1);
+}
+
+void PrintSetting() {
+	printf(
+		"You find yourself unfamiliar.\n"
+		"The air is as tufts of cotton, just dotted with light from the sky above.\n"
+		"The land is swampy and desolate save for but a single edifice that draws you.\n"
+		"You feel the force of something pulling you in, but cannot escape its clutches.\n"
+	);
+}
+
+void SaveGame(Character* character, Room* map, Room* currentRoom) {
+	printf("Saving map...");
+	FILE* fp = fopen("saveFile.txt", "w");
+	SaveCharacter(fp, character); // Save character and items
+	SaveMap(fp, map, currentRoom); // Save all rooms
+	fclose(fp);
+	printf("Map saved");
+}
+
+Character LoadGame(Room** map, Room** currentRoom) {
+	printf("Loading save...\n");
+	FILE* fp = fopen("saveFile.txt", "r");
+	Character character = InitWarrior();
+	if (fp != NULL) {
+		char line[50];
+		fgets(line, 49, fp);
+		character = LoadCharacter(line);
+		LoadMap(fp, map, currentRoom, NULL);
+		printf("Save loaded\n\n\n");
+	}
+	return character;
 }
 
 Room* Menu(char cmd, Room *room, Character *character) {	

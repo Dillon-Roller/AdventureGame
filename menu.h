@@ -16,7 +16,10 @@
 #define CLEAR() system("clear")
 #endif
 
-Character CharacterCreator();
+Character CharacterCreator(Room** map, Room** currentRoom);
+void PrintSetting();
+void SaveGame(Character* character, Room* map, Room* currentRoom);
+Character LoadGame(Room** map, Room** currentRoom);
 Room* Menu(char cmd, Room *room, Character *character);
 void AttackCommand(Room *room, Character *character);
 void UsePotionCommand(Character* character);
