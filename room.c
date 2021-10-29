@@ -239,8 +239,7 @@ void PrintRoom(const Room *r) {
 
 	PrintEnemy(r->enemy);
 
-	printf("You are %d %s deep into this nightmare.", r->level, r->level == 1 ? "level" : "levels");
-	printf("\n");
+
 
   if(r->isEnemyDefeated) {
     printDungeon();
@@ -263,6 +262,8 @@ void PrintRoom(const Room *r) {
             break;
     }
   }
+  printf("You are %d %s deep into this nightmare.", r->level, r->level == 1 ? "level" : "levels");
+	printf("\n");
 }
 
 void PrintMap(const Room *r) {

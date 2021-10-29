@@ -75,7 +75,7 @@ Room* Menu(char cmd, Room *room, Character *character) {
 			PrintRoom(room);
 			break;
 		case 'e':	// Enemy description
-				PrintEnemy(room->enemy);
+				PrintEnemyAscii(room->enemy);
 			break;
 		case 'i':	// List inventory
 			if (character->itemPtr != NULL) {

@@ -18,6 +18,7 @@ typedef struct enemy {
 Enemy* InitEnemy(int health, int attack, int defense, char* name, char* desc, Item* item);
 //Print information about enemy
 void PrintEnemy(const Enemy* enemy);
+void PrintEnemyAscii(const Enemy* enemy);
 //Deal damage to enemy and return amount
 int AttackEnemy(int damage, Enemy* enemy);
 //Return the item held by enemy
