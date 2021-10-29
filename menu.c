@@ -111,7 +111,7 @@ Room* Menu(char cmd, Room *room, Character *character) {
 			PrintRoom(room);
 			break;
 		case 'e':	// Enemy description
-				PrintEnemy(room->enemy);
+				PrintEnemyAscii(room->enemy);
 			break;
 		case 'i':	// List inventory
 			if (character->itemPtr != NULL) {
@@ -202,21 +202,22 @@ void UsePotionCommand(Character* character) {
 void PrintCommandList() {
 	printf(
 		"Command List:\n\n"
-		"'1':	Move to the forward room\n"
-		"'2':	Move to the left room\n"
-		"'3':	Move to the right room\n"
-		"'4':	Move back to the previous room\n"
-		"'f':	Interact with a room's item\n"
-		"'r':	Show room description\n"
-		"'e':	Show enemy description\n"
-		"'i':	List inventory\n"
-		"'c':	Show character information\n"
-		"'u':	Use health potion\n"
-		"'a':	Attack enemy\n"
-		"'h':	Show command list\n"
-		"'s': 	Save the game (can only save 1 game currently)\n"
-		"'l': 	Load last saved game\n"
-		"'q': 	Quit game\n"
+		"'1': \tMove to the forward room\n"
+		"'2': \tMove to the left room\n"
+		"'3': \tMove to the right room\n"
+		"'4': \tMove back to the previous room\n"
+		"'f': \tInteract with a room's item\n"
+		"'r': \tShow room description\n"
+		"'e': \tShow enemy description\n"
+		"'i': \tList inventory\n"
+		"'c': \tShow character information\n"
+		"'u': \tUse health potion\n"
+		"'a': \tAttack enemy\n"
+		"'h': \tShow command list\n"
+    "'m': \tShow map (H - current location, X - enemy defeated)\n"
+		"'s': \tSave the game (can only save 1 game currently)\n"
+		"'l': \tLoad last saved game\n"
+		"'q': \tQuit game\n"
 		"\n"
 	);
 }

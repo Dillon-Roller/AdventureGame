@@ -1,6 +1,7 @@
 #include "item.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include "asciiArt.h"
 
 Item* InitItem(const ItemType type) {
   Item* item = (Item*)malloc(sizeof(Item));
@@ -92,6 +93,29 @@ void PrintItem(const Item* item) {
   printf("Health: %d\n", item->health);
   printf("Attack: %d\n", item->attack);
   printf("Defense: %d\n", item->defense);
+
+    switch (item->type) {
+        case SWORD:
+            return printSword();
+            break;
+        case SHIELD:
+            return printShield();
+            break;
+        case BOW:
+            return printBow();
+            break;
+        case MUSKET:
+            return printMusket();
+            break;
+        case ARMOR:
+            return printArmor();
+            break;
+        case POTION:
+            return printPotion();
+            break;
+        default:
+            return;
+    }
 }
 
 void PrintItemList(Item* itemPtr) {

@@ -1,4 +1,5 @@
 #include "enemy.h"
+#include "asciiArt.h"
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -18,12 +19,38 @@ Enemy* InitEnemy(int health, int attack, int defense, char* name, char* desc, It
 }
 
 void PrintEnemy(const Enemy* enemy) {
+  if (enemy != NULL) {
+		printf("Type: %s\n", enemy->name);
+		printf("Enemy description: %s\n", enemy->desc);
+		printf("Health: %d\n", enemy->health);
+		printf("Attack: %d\n", enemy->attack);
+		printf("Defense: %d\n", enemy->defense);
+  }
+	else {
+		printf("The foe is sprawled atop shimmering mess\n");
+	}
+}
+
+void PrintEnemyAscii(const Enemy* enemy) {
 	if (enemy != NULL) {
 		printf("Type: %s\n", enemy->name);
 		printf("Enemy description: %s\n", enemy->desc);
 		printf("Health: %d\n", enemy->health);
 		printf("Attack: %d\n", enemy->attack);
 		printf("Defense: %d\n", enemy->defense);
+    
+    if(strcmp(enemy->name, "Gargoyle") == 0) {
+      printGargoyle();
+    }
+    else if(strcmp(enemy->name, "Elemental") == 0) {
+      printElemental();
+    }
+    else if(strcmp(enemy->name, "Wisp") == 0) {
+      printWisp();
+    }
+    else {
+      printBoss();
+    }
 	}
 	else {
 		printf("The foe is sprawled atop shimmering mess\n");
