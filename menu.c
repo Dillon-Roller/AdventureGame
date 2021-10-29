@@ -4,18 +4,23 @@
 
 #include "menu.h"
 
-// Clear screen macros
-#ifndef _MSC_BUILD	// If not using Visual Studio
-	#include <unistd.h>
-#endif
-// linux macro
-#ifdef _WIN32	// Windows OS
-	#define CLEAR() system("cls")
-#else	// Other OS
-	#define CLEAR() system("clear")
-#endif
-
 Character CharacterCreator() {
+	printf("Do you want to load a previous save? (y or n)");
+
+	while (1) {
+		char option = getchar();
+		while (!isalpha(option)) { option = getchar(); } // Ensure only alphabetic characters
+
+		if (option == 'y') {
+			//SaveSelector();
+			break;
+		}
+		else if (option == 'n') {
+			break;
+		}
+	}
+
+
 	do {
 		printf("Select your character type:\n\n");
 		PrintCharacterTypes();
@@ -44,6 +49,8 @@ Character CharacterCreator() {
 }
 
 Room* Menu(char cmd, Room *room, Character *character) {	
+	CLEAR();
+
 	switch(cmd) {
 		case '1':	// Move to the forward room
 		case '2':	// Move to the left room
@@ -119,9 +126,9 @@ void AttackCommand(Room *room, Character *character) {
 		}
 		else
 		{
-			Item *item = EnemyDefeated(room);
-			AddItemToCharacter(item, character);
 			printf("You have defeated the %s!\n", room->enemy->name);
+			Item *item = EnemyDefeated(room);
+			AddItemToCharacter(item, character);			
 			printf("A %s has been added to your inventory\n", GetItemTypeName(item->type));
 		}				
 	}

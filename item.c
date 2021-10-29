@@ -36,7 +36,10 @@ Item* InitItem(const ItemType type) {
           item->attack = 0;
           item->defense = 10;
           break;
+      case POTION:
+          break;
       default:
+          item = NULL;
           break;
       }
   }
@@ -44,59 +47,31 @@ Item* InitItem(const ItemType type) {
 }
 
 void ItemLevelUp(Item* item) {
-  switch(item->type) {
+    switch (item->type) {
     case SWORD:
-      item->health += 2;
-      item->attack += 2;
-      break;
+        item->health += 2;
+        item->attack += 2;
+        break;
     case SHIELD:
-      item->health += 2;
-      item->defense += 2;
-      break;
+        item->health += 2;
+        item->defense += 2;
+        break;
     case BOW:
-      item->health += 2;
-      item->attack += 2;
-      item->defense += 2;
-      break;
+        item->health += 2;
+        item->attack += 2;
+        item->defense += 2;
+        break;
     case MUSKET:
-      item->health += 2;
-      item->attack += 2;
-      item->defense += 2;
-      break;
+        item->health += 2;
+        item->attack += 2;
+        item->defense += 2;
+        break;
     case ARMOR:
-      item->health += 2;
-      item->defense += 2;
-      break; 
-  }
-  item->level++;
-}
-
-void ItemLevelUp(Item* item) {
-  switch(item->type) {
-    case SWORD:
-      item->health += 2;
-      item->attack += 2;
-      break;
-    case SHIELD:
-      item->health += 2;
-      item->defense += 2;
-      break;
-    case BOW:
-      item->health += 2;
-      item->attack += 2;
-      item->defense += 2;
-      break;
-    case MUSKET:
-      item->health += 2;
-      item->attack += 2;
-      item->defense += 2;
-      break;
-    case ARMOR:
-      item->health += 2;
-      item->defense += 2;
-      break; 
-  }
-  item->level++;
+        item->health += 2;
+        item->defense += 2;
+        break;
+    }
+    item->level++;
 }
 
 const char* GetItemTypeName(const ItemType type) {

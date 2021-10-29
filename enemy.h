@@ -24,6 +24,8 @@ int AttackEnemy(int damage, Enemy* enemy);
 Item* DropItem(const Enemy* emeny);
 //Returns true if enemy health is <= 0 else false
 bool IsEnemyDead(const Enemy* enemy);
+//Frees enemy allocation and returns NULL
+Enemy* FreeEnemy(Enemy* enemy);
 
 //Init enemies with various stats
 Enemy* InitGargoyle(const int level);

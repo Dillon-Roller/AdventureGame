@@ -1,5 +1,10 @@
 Saves
 	Add date and time to file name
 	Create menu upon launch to continue
-	Add character information to save on first line
+	---Add character information to save on first line
 	Read character information "Wizard Health:XXX Attack:XXX..." to display on save selector
+Character Save
+	include current health in savefile
+	load current health into character
+Rename test_menu.c to main.c
+Implement Terrence's ASCII art

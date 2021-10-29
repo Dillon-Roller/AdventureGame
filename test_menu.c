@@ -36,20 +36,22 @@ int main(void) {
 		}
 		
 		if (option == 's') {
+			CLEAR();
 			SaveGame(&character, map, currentRoom);
+			continue;
 		}
-		if (option == 'm') {
-			//PrintCharacterMap(map);
-		}
-		
+
 		if (option == 'l') {
+			CLEAR();
 			character = LoadGame(&map, &currentRoom);
+			continue;
 		}
-    
-		// Remove whitespace from stdin
-		/*char c;
-		while (isspace(c = getchar())) {}
-		ungetc(c, stdin);*/
+
+		if (option == 'm') {
+			CLEAR();
+			PrintCharacterMap(map, currentRoom);
+			continue;
+		}
 
 		printf("\n");
 

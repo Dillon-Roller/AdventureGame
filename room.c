@@ -223,7 +223,9 @@ Room* MoveToRoom(Room *r, char option) {
 
 Item* EnemyDefeated(Room *r) {
 	r->isEnemyDefeated = true;
-	return DropItem(r->enemy);
+	Item* item = DropItem(r->enemy);
+	r->enemy = FreeEnemy(r->enemy);
+	return item;
 }	
 
 void PrintRoom(const Room *r) {
@@ -251,23 +253,42 @@ void PrintMap(const Room *r) {
 	}
 }
 
-/*char* GetCharacterMapString(const Room* r, char* str) {
+void GetCharacterMapString(const Room* r, const Room* currentRoom, char* str) {
 	if (r != NULL)
 	{
-		PrintCharacterMap(r->up);
-		PrintCharacterMap(r->left);
-		PrintCharacterMap(r->right);
-
-		if (r->isEnemyDefeated) {
+		if (r == currentRoom) {
+			strcat(str, "H");
+		}
+		else if (r->isEnemyDefeated) {
 			strcat(str, "X");
 		}
 		else {
 			strcat(str, "O");
 		}
+		GetCharacterMapString(r->up, currentRoom, str);
+		GetCharacterMapString(r->left, currentRoom, str);
+		GetCharacterMapString(r->right, currentRoom, str);
 	}
-}*/
+}
 
+void PrintCharacterMap(const Room* map, const Room* currentRoom) {
+	char s[50] = "";
+	GetCharacterMapString(map, currentRoom, s);
 
+	printf(	"%c%c%c %c%c%c %c%c%c %c%c%c %c%c%c %c%c%c %c%c%c %c%c%c %c%c%c\n"
+			"\\|/ \\|/ \\|/ \\|/ \\|/ \\|/ \\|/ \\|/ \\|/\n"
+			" %c   %c   %c   %c   %c   %c   %c   %c   %c\n"
+			"   \\ | /       \\ | /       \\ | /\n"
+			"     %c           %c           %c\n"
+			"        \\        |         /\n"
+			"            \\    |     /\n"
+			"                 %c\n",
+			s[21],s[20],s[22],s[17],s[16],s[18],s[25],s[24],s[26],s[8],s[7],s[9],s[4],s[3],s[5],s[12],s[11],s[13],s[34],s[33],s[35],s[30],s[29],s[31],s[38],s[37],s[39],
+			s[19],s[15],s[23],s[6],s[2],s[10],s[32],s[28],s[36],
+			s[14],s[1],s[27],
+			s[0]);
+
+}
 
 void SaveRoom(FILE* fp, const Room *r, const Room *cur) {
   int item;
@@ -350,6 +371,13 @@ Room* LoadMap(FILE* fp, Room** map, Room** curr, Room* previous) {
 
 		if (array[1] > 1) {
 			room->down = previous;
+		}
+
+		if (array[1] == MAX_LEVEL) {
+			room->up = NULL;
+			room->left = NULL;
+			room->right = NULL;
+			return room;
 		}
 
 		room->up = LoadMap(fp, map, curr, room);
