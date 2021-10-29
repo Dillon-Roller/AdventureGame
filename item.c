@@ -110,7 +110,7 @@ void PrintItem(const Item* item) {
             return printPotion();
             break;
         default:
-            return "UNKNOWN_ITEM";
+            return;
     }
 }
 

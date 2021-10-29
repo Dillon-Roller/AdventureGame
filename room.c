@@ -240,7 +240,7 @@ void PrintRoom(const Room *r) {
 	printf("You are %d %s deep into this nightmare.", r->level, r->level == 1 ? "level" : "levels");
 	printf("\n");
 
-    switch (room->type) {
+    switch (r->type) {
         case DARK:
             return printGargoyleDungeon();
             break;
